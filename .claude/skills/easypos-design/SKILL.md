@@ -28,7 +28,7 @@ Nguyên tắc:
   - `references/changelog.md` — những điểm đã chuẩn hóa so với bản skill gốc (dùng để đối chiếu khi designer phản hồi).
 - **File đầu ra** trong `{ux_workspace}/figma/`:
   - `figma-log.md` — theo `assets/figma-log-template.md`: màn đã vẽ (link, node id), bảng ánh xạ, bản nháp chờ duyệt, `[ASSUMPTION]`, câu hỏi mở.
-  - Nếu `{ux_workspace}/.memlog.md` đã có (do `bmad-ux` tạo) thì append quyết định vào đó: `- {date} | <decision|change|assumption|event> | <text>`.
+  - Nếu `{ux_workspace}/.memlog.md` đã có (do `ux` tạo) thì append quyết định vào đó: `- {date} | <decision|change|assumption|event> | <text>`.
 
 ## On Activation
 
