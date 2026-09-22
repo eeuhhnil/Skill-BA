@@ -1,0 +1,58 @@
+# Workflow customization surface for srs.
+#
+# Override files (not edited here):
+#   {project-root}/_bmad/custom/srs.toml         (team)
+#   {project-root}/_bmad/custom/srs.user.toml    (personal)
+
+[workflow]
+
+# --- Configurable below. Overrides merge per BMad structural rules: ---
+#   scalars: override wins • arrays: append
+
+# Steps to run before the standard activation (config load, greet).
+activation_steps_prepend = []
+
+# Steps to run after greet but before the workflow begins.
+activation_steps_append = []
+
+# Persistent facts kept in mind for the whole run. Literal sentence, `skill:` or `file:` glob.
+persistent_facts = [
+  "Công ty là công ty product (EasyPos) — không có BRD; SRS là tài liệu chính giao cho dev và QA.",
+  "Quy trình BA: kiểm tra tài liệu đã có → brainstorming → research → giải pháp sơ bộ → đánh giá ảnh hưởng → họp chốt → wireframe trắng đen → wireframe màu (Figma) → SRS → stories.",
+  "SRS chính thức nằm trên Confluence space EP, mục 'Tài liệu nghiệp vụ'. Nhiều nghiệp vụ đã có SRS sẵn — luôn kiểm tra trước khi viết mới.",
+]
+
+# Executed when the workflow completes. String or array.
+on_complete = ""
+
+# Company SRS template and quality checklist.
+srs_template = "assets/srs-template.md"
+validation_checklist = "assets/srs-checklist.md"
+
+# Run folder. srs.md lands in `{srs_output_path}/{run_folder_pattern}/`.
+srs_output_path = "docs/srs"
+run_folder_pattern = "srs-{feature}-{date}"
+
+# Where upstream inputs usually live (scanned during Discovery).
+input_globs = [
+  "docs/briefs/**/brief.md",
+  "docs/impact/**/impact.md",
+  "docs/ux-designs/**/wireframes/*.excalidraw",
+]
+
+# Document standards applied at Finalize, in order.
+doc_standards = [
+  "Thuật ngữ nhất quán giữa bảng UI, luồng xử lý và BR (cùng một tên cho cùng một trường/màn hình/thông báo).",
+  "Thông báo lỗi viết nguyên văn trong ngoặc kép, đúng như sẽ hiển thị cho người dùng.",
+  "Ngày trong Lịch sử thay đổi dùng định dạng DD/MM/YYYY.",
+]
+
+# Internal tools consulted on demand.
+external_sources = [
+  "Khi cần biết nghiệp vụ đã có tài liệu chưa, hoặc chức năng liên quan mô tả thế nào: dùng `python tools/confluence_scan.py search|fetch` (chỉ đọc) trên space EP.",
+]
+
+# Routing beyond local files at Finalize. Fires automatically unless the user opts out.
+external_handoffs = [
+  "Hỏi người dùng có muốn đẩy SRS lên Confluence không — không tự đẩy. Nếu SRS đang cập nhật một trang có sẵn (confluence_page_id), cảnh báo rằng đẩy sẽ GHI ĐÈ nội dung trang (bản cũ còn trong Page History) và xin xác nhận riêng. Đồng ý → `python tools/push_confluence.py {doc_workspace}/srs.md` (kèm `--title` đúng tiêu đề trang hiện có, hoặc `--parent-id` khi tạo mới), báo lại URL và ghi page id vào frontmatter.",
+]

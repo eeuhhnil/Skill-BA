@@ -1,0 +1,109 @@
+category,technique_name,description,detail,provenance,good_for,audience
+collaborative,Yes And Building,"Không phủ định; mỗi người mở đầu bằng ""Đúng, và..."" rồi bổ sung vào ý trước, xếp chồng thành chuỗi ý tưởng được chấp nhận",,classic,novel|unstuck|planning,group
+collaborative,Brain Writing Round Robin,"Mọi người viết ý tưởng trong im lặng rồi chuyền tờ giấy; bạn phát triển tiếp trên bất cứ ý nào rơi vào tay, hết vòng này sang vòng khác",,classic,novel|feature,group
+collaborative,Random Stimulation,"Rút ngẫu nhiên một từ hoặc hình ảnh và ép nó liên kết với vấn đề: ""cái NÀY gợi ra giải pháp gì?""",,classic,unstuck|novel,either
+collaborative,Role Playing,"Mỗi người nói với vai một bên liên quan khác nhau, nêu điều vai đó muốn, lo sợ và sẽ đòi hỏi ở ý tưởng",,classic,strategy|personal|feature,either
+collaborative,Ideation Relay Race,"Mỗi lượt 30 giây, không dừng: thêm một ý, chuyền ngay cho người kế tiếp, giữ gậy tiếp sức chạy trước khi ai kịp nghĩ quá nhiều",,playful,unstuck,group
+collaborative,Idea Hot Potato,"Một ý tưởng được tung quanh vòng; ai bắt được phải biến đổi nó trong 10 giây rồi chuyền đi, không được lặp lại",,playful,unstuck,group
+collaborative,Steal And Upgrade,"Chọn một ý của người bên cạnh mà bạn thích, tuyên bố nhận nó, rồi làm nó tốt hơn rõ rệt trước khi trả lại",,signature,novel|unstuck,group
+collaborative,Fold The Paper,"Mỗi người thêm một dòng vào bức vẽ hoặc câu văn bị che, chỉ thấy đoạn ngay trước đó, rồi mở ra xem toàn bộ kết quả kỳ quặc",,playful,unstuck|novel,group
+creative,What If Scenarios,"Phá bỏ từng ràng buộc một — ngân sách vô hạn, điều ngược lại là đúng, vấn đề biến mất — và đuổi theo những gì ùa đến",,signature,novel|strategy|unstuck,either
+creative,Analogical Thinking,"Hỏi ""cái này giống cái gì?"" và mượn mô thức giải pháp từ lĩnh vực trả lời được câu đó",,signature,feature|novel|diagnosis,either
+creative,First Principles Thinking,"Bóc mọi giả định đến tận sự thật nền tảng, rồi xây lại giải pháp từ đầu chỉ dựa trên sự thật",,classic,feature|novel|diagnosis|strategy,either
+creative,Forced Relationships,Lấy ngẫu nhiên hai thứ không liên quan và ép bắc cầu giữa chúng cho đến khi nảy ra ý tưởng,,signature,novel|unstuck,either
+creative,Time Shifting,"Giải quyết vấn đề như một thợ thủ công năm 1900, rồi như một người khai hoang năm 2150 — thu hoạch ràng buộc và mẹo của từng thời đại",,signature,novel|unstuck,either
+creative,Metaphor Mapping,"Tuyên bố vấn đề CHÍNH LÀ một phép ẩn dụ, mở rộng ẩn dụ đó hết mức, rồi ánh xạ từng phần ngược lại để tìm insight",,signature,novel|diagnosis,either
+creative,Cross-Pollination,"Hỏi một ngành hoàn toàn khác — sòng bạc, phòng cấp cứu, nuôi ong — sẽ giải bài toán này thế nào, rồi áp dụng cách của họ",,signature,novel|feature|strategy,either
+creative,Concept Blending,"Hợp nhất hai khái niệm thành một loại lai mới và gọi tên thứ mà sự hợp nhất trở thành, không chỉ là ghép lại",,signature,novel,either
+creative,Reverse Brainstorming,"Nghĩ ra vấn đề thay vì giải pháp — ""làm sao để việc này thất bại?"" — rồi đào từng cái để tìm điều ngược lại",,classic,diagnosis|feature|unstuck,either
+creative,Sensory Exploration,"Soi ý tưởng qua từng giác quan — vị, mùi, âm thanh, cảm giác chạm — để lộ ra những góc nhìn phi phân tích",,signature,novel|unstuck,either
+deep,Five Whys,"Hỏi ""tại sao?"" năm lần liên tiếp, câu trả lời trước làm đầu vào cho câu sau, cho đến khi chạm nguyên nhân gốc bên dưới triệu chứng",,classic,diagnosis,either
+deep,Provocation Technique,"Nêu một điều cố tình vô lý rồi khai thác nó: ""điều này có ích thế nào?"" Rút ra nguyên tắc dùng được ẩn bên trong",,classic,unstuck|novel,either
+deep,Assumption Reversal,"Liệt kê mọi giả định có sẵn trong vấn đề, lật từng cái sang điều ngược lại, rồi xây giải pháp trên nền móng đảo ngược đó",,classic,novel|diagnosis|strategy,either
+deep,Question Storming,"Chỉ đặt câu hỏi về vấn đề, không được trả lời, cho đến khi vấn đề thật sự đáng giải quyết hiện rõ",,classic,diagnosis|strategy|unstuck,either
+deep,Constraint Mapping,"Vẽ ra mọi ràng buộc, tách cái có thật khỏi cái tưởng tượng, rồi xử lý từng cái: xóa bỏ, đi vòng, hoặc biến nó thành lợi thế",,signature,feature|strategy|diagnosis,either
+deep,Failure Analysis,"Mổ xẻ một thất bại liên quan: cái gì hỏng, vì sao hỏng, bài học để lại là gì, và áp dụng bài học đó vào đây thế nào",,signature,diagnosis|strategy|feature,either
+deep,Emergent Thinking,Ngừng ép ra giải pháp; quan sát các mô thức hệ thống liên tục tạo ra và gọi tên điều đang tự nổi lên,,signature,strategy|novel,either
+deep,Causal Loop Mapping,"Vẽ các vòng phản hồi nối nguyên nhân và kết quả, tìm vòng khuếch đại và vòng cân bằng, rồi nhắm vào điểm đòn bẩy",,classic,diagnosis|strategy,either
+deep,Morphological Analysis,"Liệt kê các tham số độc lập của vấn đề, nghĩ phương án cho từng tham số, rồi kết hợp chéo để lộ ra những cấu hình chưa ai thử",,classic,feature|novel|planning,either
+deep,Laddering,"Hỏi ""và điều đó mang lại gì cho bạn?"" lên dần theo chuỗi cho đến nhu cầu thật bên dưới, rồi nghĩ ý tưởng mới ở tầng đó",,classic,personal|strategy|diagnosis,either
+introspective_delight,Inner Child Conference,"Trả lời như chính bạn lúc 7 tuổi: hỏi ""tại sao tại sao tại sao"" ngây ngô, chạy theo sự tò mò, cấm mọi suy nghĩ người lớn nhàm chán",,signature,personal|unstuck,solo
+introspective_delight,Shadow Work Mining,"Gọi tên điều bạn đang né tránh, kháng cự hoặc sợ ở vấn đề này — rồi đào vào đó tìm insight bị chôn giấu",,signature,personal|diagnosis,solo
+introspective_delight,Values Archaeology,"Liên tục hỏi ""vì sao tôi quan tâm?"" cho đến tận đáy: giá trị không thể thương lượng đang ngầm dẫn dắt lựa chọn",,signature,personal|strategy,solo
+introspective_delight,Future Self Interview,Phỏng vấn bản thân 80 tuổi thông thái về vấn đề này và ghi lại lời khuyên họ đưa ra,,signature,personal,solo
+introspective_delight,Body Wisdom Dialogue,"Cảm nhận sự căng thẳng, hồi hộp hay linh cảm mà mỗi phương án gây ra; để cái có/không của cơ thể dẫn dắt ý tưởng",,signature,personal,solo
+introspective_delight,Permission Giving,"Tự viết cho mình một giấy phép rõ ràng để nghĩ điều cấm kỵ, bất khả thi — rồi nói to suy nghĩ đó ra",,signature,personal|unstuck,solo
+introspective_delight,Secret Wish Confession,"Thì thầm điều ngại ngùng bạn thầm muốn ở đây mà không dám thừa nhận, rồi xây ý tưởng tôn trọng mong muốn đó",,signature,personal,solo
+introspective_delight,Mood Weather Report,"Gọi tên ""thời tiết"" bên trong lúc này (sương mù, bão, nắng) và để chính khí hậu cảm xúc đó sinh ra ý tưởng",,signature,personal|unstuck,solo
+structured,SCAMPER Method,"Cho ý tưởng đi qua bảy lăng kính: Thay thế, Kết hợp, Điều chỉnh, Sửa đổi, Dùng vào việc khác, Loại bỏ, Đảo ngược",,classic,feature|novel,either
+structured,Six Thinking Hats,"Xem xét vấn đề theo sáu cách, lần lượt từng cách: dữ kiện, cảm xúc, lợi ích, rủi ro, ý tưởng mới, quy trình",,classic,strategy|diagnosis|planning|personal,either
+structured,Decision Tree Mapping,"Vẽ mọi điểm lựa chọn và các nhánh rẽ từ đó, đi theo từng nhánh đến kết quả và rủi ro của nó",,signature,planning|strategy|diagnosis,either
+structured,Solution Matrix,"Kẻ lưới giữa các biến của vấn đề và các cách tiếp cận giải pháp, chấm điểm từng ô, tìm cặp tốt nhất và các khoảng trống",,signature,feature|planning,either
+structured,Trait Transfer,"Gọi tên điều làm nên thành công của một thứ không liên quan, rồi ghép những đặc điểm đó vào vấn đề của bạn",,signature,novel|feature,either
+structured,Lotus Blossom,"Đặt chủ đề vào giữa lưới 3x3, điền 8 ô xung quanh, rồi đưa từng ô đó thành trung tâm của một lưới 3x3 mới",,classic,feature|planning|novel,either
+structured,Worst Possible Idea,"Cố tình nghĩ ra những giải pháp tệ nhất có thể, rồi lật từng cái để xem nó dạy bạn cách làm đúng thế nào",,classic,unstuck|novel,either
+structured,Disney Method,"Cho ý tưởng đi qua ba phòng: Người mơ mộng (gì cũng được), Người thực tế (làm thế nào), Người phê bình (chỗ nào hỏng)",,classic,feature|strategy|planning,either
+structured,Starbursting,"Tra vấn ý tưởng chỉ bằng câu hỏi — ai, cái gì, ở đâu, khi nào, tại sao, như thế nào — hỏi cạn từng loại trước khi trả lời",,classic,feature|planning|diagnosis,either
+structured,Mind Mapping,"Phân nhánh chủ đề trung tâm ra ngoài, mỗi nút sinh nút con; đi theo các hướng rẽ và để mạng lưới lan rộng",,classic,planning|novel|feature,either
+structured,Crazy 8s,"Tám ý tưởng trong tám phút, mỗi ô một ý, không chỉnh sửa — tốc độ vượt mặt người phê bình trong đầu bạn",,classic,feature|novel|unstuck,either
+theatrical,Time Travel Talk Show,"Dẫn một talk show phỏng vấn bản thân quá khứ, hiện tại và tương lai để lấy lời khuyên của từng thời kỳ về vấn đề",,playful,novel|personal,either
+theatrical,Alien Anthropologist,"Làm một người ngoài hành tinh bối rối đang nghiên cứu vấn đề và nói to những gì có vẻ lạ, tùy tiện hoặc điên rồ",,playful,diagnosis|unstuck|strategy,either
+theatrical,Dream Fusion Laboratory,"Nói ra giải pháp viễn tưởng bất khả thi trước, rồi suy ngược các bước bắc cầu về thực tế",,signature,novel|unstuck,either
+theatrical,Emotion Orchestra,"Chạy một vòng ý tưởng riêng do mỗi cảm xúc dẫn dắt (giận, vui, sợ, hy vọng), rồi hòa hợp các ý mâu thuẫn của chúng",,playful,personal|strategy,either
+theatrical,Parallel Universe Cafe,"Viết lại một quy luật nền tảng của thực tại (vật lý, kinh tế, chuẩn mực xã hội) và giải vấn đề theo luật đó",,playful,novel|unstuck,either
+theatrical,Persona Journey,"Nhập vai một hình mẫu và giải vấn đề trong vai, gọi tên những gì persona đó thấy mà bạn thường bỏ lỡ",,signature,feature|strategy,either
+theatrical,Devil's Advocate Courtroom,"Dựng một phiên tòa: buộc tội ý tưởng, bào chữa cho nó, rồi bồi thẩm đoàn tuyên án, mỗi vai được tranh luận trọn vẹn",,signature,strategy|diagnosis,group
+wild,Chaos Engineering,"Cố tình phá ý tưởng theo mọi cách nó có thể thất bại, rồi chỉ xây lại những phần sống sót",,signature,feature|diagnosis|strategy,either
+wild,Guerrilla Gardening Ideas,Gieo giải pháp vào nơi ít ai ngờ nhất và để nó lớn ngầm cho đến khi khiến mọi người bất ngờ,,playful,strategy|unstuck,either
+wild,Pirate Code Brainstorm,"Lấy những phần hay nhất từ bất cứ đâu, phối lại không cần xin phép, chộp cái gì hiệu quả rồi chạy",,playful,novel|unstuck,either
+wild,Zombie Apocalypse Planning,"Xã hội vừa sụp đổ — lột ý tưởng đến mức chỉ còn những gì sống sót khi không điện, không luật lệ, không dự phòng",,playful,feature|strategy|unstuck,either
+wild,Drunk History Retelling,"Giải thích như thể bạn đã ngà ngà: không bộ lọc, không thuật ngữ, chỉ sự thật trần trụi đơn giản đến ngớ ngẩn",,playful,unstuck|diagnosis,either
+wild,Anti-Solution,"Nghĩ cách làm vấn đề tệ đi một cách ngoạn mục, rồi đảo mỗi cách phá hoại thành một cách sửa",,signature,diagnosis|unstuck,either
+wild,Elemental Forces,"Để lửa, nước, đất và không khí mỗi thứ nhào nặn ý tưởng theo cách khắc nghiệt riêng và xem cái gì còn lại",,playful,novel|unstuck,either
+biomimetic,Nature's Solutions,"Gọi tên một sinh vật đã giải được vấn đề của bạn, rồi sao chép cơ chế của nó vào thiết kế",,signature,feature|novel,either
+biomimetic,Ecosystem Thinking,"Vẽ vấn đề như một hệ sinh thái: ai ăn ai, ai hợp tác, cái gì phân rã, cái gì lấp khoảng trống",,signature,strategy|diagnosis,either
+biomimetic,Evolutionary Pressure,"Sinh ra nhiều biến thể xấu xí, áp một luật chọn lọc khắc nghiệt, lai các cá thể sống sót, lặp lại đến khi nó thích nghi",,signature,feature|novel,either
+biomimetic,Predator & Prey,"Chọn một mối đe dọa với ý tưởng, rồi thiết kế cách phòng thủ, ngụy trang hoặc chạy trốn mà một loài vật sẽ tiến hóa để chống lại",,signature,strategy|feature,either
+biomimetic,Metamorphosis Stages,"Ép ý tưởng qua các giai đoạn trứng, ấu trùng, nhộng, trưởng thành: mỗi giai đoạn một hình dạng và mục đích khác hẳn",,signature,novel|strategy,either
+biomimetic,Swarm Logic,Cấm kế hoạch tổng thể: giải bằng các luật cục bộ đơn giản mà mỗi cá thể tuân theo để trật tự tự hình thành từ dưới lên,,signature,feature|strategy,either
+quantum,Observer Effect,"Hỏi việc quan sát, đo lường hoặc tung ra ý tưởng này làm thay đổi chính thứ bạn đang cố nắm bắt thế nào",,signature,strategy|diagnosis,either
+quantum,Entanglement Thinking,Ghép cặp hai phần xa nhau của vấn đề và khẳng định thay đổi ở phần này lập tức lật phần kia — làm lộ mối liên kết ẩn,,signature,diagnosis|strategy,either
+quantum,Superposition Collapse,"Giữ tất cả các giải pháp cạnh tranh cùng tồn tại, rồi gọi tên ràng buộc duy nhất khiến chúng quy về một người thắng",,signature,strategy|diagnosis,either
+quantum,Relativity Frame Shift,"Chạy lại ý tưởng từ hệ quy chiếu của một người quan sát rất khác — người dùng chậm, đối thủ, bạn trong tương lai — và xem cái gì bị bóp méo",,signature,strategy|novel,either
+quantum,Field Lines,Coi mục tiêu như một điện tích và vẽ các lực vô hình đang kéo từng bên liên quan lại gần hoặc ra xa nó,,signature,strategy,either
+quantum,Quantum Tunneling,"Giả định ý tưởng có thể xuyên thẳng qua rào cản ""bất khả thi"" thay vì vượt qua — bên kia có gì, đạt được với chi phí thấp",,signature,unstuck|novel,either
+cultural,Indigenous Wisdom,"Hỏi một hệ tri thức bản địa hoặc truyền thống sẽ tiếp cận việc này thế nào — gọi tên nền văn hóa, vận dụng cách giải quyết vấn đề của cha ông",,signature,personal|strategy|novel,either
+cultural,Fusion Cuisine,Chọn hai nền văn hóa không liên quan và ép trộn cách tiếp cận của chúng; thu hoạch thứ lai mà riêng từng bên không nghĩ ra,,signature,novel,either
+cultural,Ritual Innovation,"Thiết kế lại ý tưởng như một nghi lễ — xác định ngưỡng cửa, các cử chỉ, sự chuyển hóa mà người tham gia trải qua",,signature,novel|personal,either
+cultural,Mythic Frameworks,"Ánh xạ vấn đề lên một câu chuyện thần thoại: gọi tên các hình mẫu, tìm câu chuyện song song, để cấu trúc của nó quyết định lời giải",,signature,strategy|personal|novel,either
+cultural,Proverb Mining,"Gom tục ngữ từ nhiều nền văn hóa về chủ đề này, rồi xây giải pháp từ câu mâu thuẫn mạnh nhất với giả định của bạn",,signature,personal|strategy,either
+cultural,Ancestor Council,"Triệu tập ba vị tiền bối từ các truyền thống khác nhau, nói ra phán quyết của từng người về ý tưởng, rồi hòa giải bất đồng giữa họ",,signature,personal|strategy,either
+cultural,Trickster's Gambit,"Nhập vai kẻ láu cá — Coyote, Anansi, Loki — và giải bằng cách gian lận, đảo ngược hoặc phá luật thiêng",,playful,unstuck|strategy,either
+absurdist,Villain's Monologue,Trình bày vấn đề như một kẻ chủ mưu độc ác đang hả hê về âm mưu; kế hoạch hiểm độc để lộ giải pháp thật,,playful,diagnosis|strategy|unstuck,either
+absurdist,Explain It to a Golden Retriever,"Trình bày lại ý tưởng cho một chú chó hiếu động chỉ quan tâm đồ ăn, bóng và ngủ; chỉ giữ lại những gì còn trụ được",,playful,unstuck|diagnosis|feature,either
+absurdist,Infomercial at 3AM,"Bán ý tưởng còn non như một quảng cáo đêm khuya tuyệt vọng: ""Khoan đã, còn nữa!"" cho đến khi tính năng rơi ra",,playful,strategy|novel,either
+absurdist,Drunk Uncle at Thanksgiving,"Để người họ hàng ồn ào, không kiêng nể nhất xả về vấn đề; đào trong những nhận xét gay gắt đó tìm sự thật bị chôn vùi",,playful,unstuck|diagnosis,either
+absurdist,Cursed Genie,"Ước một điều, rồi để thần đèn độc ác ban nó theo cách đúng về câu chữ nhưng thảm họa nhất; vá từng kẽ hở",,playful,diagnosis|feature,either
+absurdist,Three Rounds of Stupid,"Vòng 1 ý tưởng vô lý, Vòng 2 làm mỗi ý VÔ LÝ HƠN, Vòng 3 tìm điều nghiêm túc nhỏ nhất ẩn trong ý ngớ ngẩn nhất",,playful,unstuck|novel,either
+constraint,Kill the Crown Jewel,"Xóa tính năng hay nhất, được yêu thích nhất — giờ thiết kế lại toàn bộ để vẫn thắng khi không có nó",,signature,feature|strategy|unstuck,either
+constraint,1000x Budget,"Giả vờ tiền, thời gian và nhân lực là vô hạn — thiết kế phiên bản phi lý, rồi đào nó tìm ý tưởng bạn thật sự lấy dùng được",,signature,novel|strategy,either
+constraint,Ship in 60 Minutes,"Bạn phải ra mắt trong một giờ với những gì đang có — nêu rõ bạn cắt gì, làm giả gì, mượn gì để biến nó thành thật",,signature,feature|planning|unstuck,either
+constraint,The $0 Mandate,"Đạt mục tiêu mà không tiêu một đồng nào — không công cụ, không thuê người, không quảng cáo; chỉ con người, sự giúp đỡ và những gì bạn có",,signature,planning|strategy|feature,either
+constraint,One Feature Only,"Bạn chỉ được giữ đúng MỘT năng lực, không gì khác — chọn nó, rồi làm thứ duy nhất đó tốt đến khó tin",,signature,feature|strategy,either
+constraint,Crank the Dial to 11,"Chọn một chiều và phóng đại nó đến mức lố bịch — nhanh nhất, to nhất, rẻ nhất, lạ nhất — và xem điều gì mở ra",,signature,novel|unstuck,either
+constraint,Constraint Roulette,"Mỗi vòng rút một giới hạn khắc nghiệt ngẫu nhiên (không màn hình, nửa đội, một ngày) và giải lại theo nó; cái sống sót thành ý tưởng thật",,signature,unstuck|feature,either
+speculative_future,Time Horizon Ladder,"Giải ý tưởng cho 1 năm tới, rồi 10, rồi 100 năm — ghi lại cái gì còn trụ, gãy, hoặc trở nên vô lý ở mỗi nấc",,signature,strategy|planning|novel,either
+speculative_future,Post-Scarcity Test,"Giả định ràng buộc cốt lõi (tiền, năng lượng, thời gian, sự chú ý) giờ vô hạn và miễn phí — ý tưởng trở thành gì",,signature,novel|strategy,either
+speculative_future,Utopia vs Dystopia Split-Screen,Viết cùng một tương lai hai lần: tờ quảng cáo khi mọi thứ hoàn hảo và dòng tít khi mọi thứ tồi tệ,,signature,strategy|diagnosis,either
+speculative_future,Sci-Fi Artifact From the Future,"Mô tả một vật thể, quảng cáo hoặc bản tin từ thế giới nơi ý tưởng này đã thắng — rồi suy ngược lại nó",,signature,novel|feature,either
+speculative_future,Emerging Tech Collision,"Ép ghép ý tưởng với một công nghệ tiên phong (AGI, nhiệt hạch, cấy ghép thần kinh, chỉnh sửa gen) và hỏi thứ mới nào ra đời",,signature,novel|feature|strategy,either
+speculative_future,What-If-The-World-Changed Card Flip,"Rút một thay đổi thế giới điên rồ (không còn riêng tư, dân số giảm một nửa, tuổi thọ 200 năm) và thiết kế lại ý tưởng cho thế giới đó",,signature,novel|unstuck,either
+speculative_future,Future Anthropologist Dig,"Một học giả năm 2200 khai quật được ý tưởng của bạn như một di vật — họ kết luận nó nói gì về chúng ta, và cái gì đã thay thế nó",,signature,strategy|novel,either
+structured,How Might We,"Diễn đạt lại vấn đề thành loạt câu hỏi cơ hội ""Làm thế nào chúng ta có thể..."" trước, rồi nghĩ ý tưởng cho câu sắc nhất",,classic,feature|novel|strategy|diagnosis,either
+structured,Job to Be Done,"Hỏi người dùng thật sự ""thuê"" sản phẩm này để làm việc gì, rồi nghĩ ý tưởng quanh công việc đó, không phải tính năng bạn tưởng",,classic,feature|strategy|novel,either
+structured,Empathy Map,"Vẽ những gì người dùng nói, nghĩ, làm và cảm thấy quanh vấn đề, rồi đào từng góc phần tư tìm nhu cầu chưa được đáp ứng",,classic,feature|personal,either
+structured,Backcasting,"Cố định tương lai đã hoàn thành thật chi tiết, rồi đi ngược từng bước về hành động đầu tiên bạn buộc phải làm",,classic,strategy|planning|novel,either
+deep,TRIZ Contradiction,"Gọi tên mâu thuẫn cốt lõi (cái chỉ tốt lên khi cái khác tệ đi), rồi nghĩ cách thắng cả hai thay vì đánh đổi",,classic,feature|novel|diagnosis,either
+deep,Fishbone Diagram,"Chia xương sống vấn đề thành các nhóm nguyên nhân (con người, quy trình, công cụ, môi trường) và đào từng xương tìm nguyên nhân góp phần",,classic,diagnosis,either
+deep,Build on What Works,"Gọi tên điều đang thành công và vì sao, rồi nghĩ cách khuếch đại, mở rộng nó thay vì sửa cái đang hỏng",,classic,personal|strategy,either
+speculative_future,Scenario Cross,"Chọn hai yếu tố bất định có tác động lớn, giao chúng thành bốn tương lai, rồi nghĩ nước đi thắng trong cả bốn",,classic,strategy|planning,either

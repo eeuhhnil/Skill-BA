@@ -1,0 +1,14 @@
+# Team override cho bmad-product-brief.
+# Merge vào .claude/skills/bmad-product-brief/customize.toml (scalar: override thắng · array: nối thêm).
+
+[workflow]
+
+external_handoffs = [
+  """Confluence (Data Center nội bộ, space EP, dưới trang 'Tài liệu nghiệp vụ' id 50697857). \
+Chế độ tương tác: sau khi tài liệu đã hoàn tất, LUÔN hỏi người dùng có muốn đẩy lên Confluence không — không tự đẩy. \
+Nếu đồng ý: chạy `python tools/push_confluence.py {doc_workspace}/brief.md`, sau đó nếu có addendum thì chạy \
+`python tools/push_confluence.py {doc_workspace}/addendum.md --parent-title "<title của brief>"`; báo lại URL script in ra. \
+Nếu từ chối: bỏ qua, ghi status "skipped" và nhắc lệnh để họ tự chạy sau. \
+Token đọc từ biến CONFLUENCE_PAT hoặc file ~/.confluence-pat; thiếu token thì hướng dẫn tạo Personal Access Token, không xin token qua chat. \
+Chế độ headless: không đẩy, ghi status "skipped" kèm reason "cần người dùng xác nhận".""",
+]

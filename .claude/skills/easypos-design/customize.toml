@@ -1,0 +1,55 @@
+# Workflow customization surface for easypos-design.
+#
+# Override files (not edited here):
+#   {project-root}/_bmad/custom/easypos-design.toml         (team)
+#   {project-root}/_bmad/custom/easypos-design.user.toml    (personal)
+
+[workflow]
+
+# --- Configurable below. Overrides merge per BMad structural rules: ---
+#   scalars: override wins • arrays: append
+
+# Steps to run before the standard activation (config load, greet).
+activation_steps_prepend = []
+
+# Steps to run after greet but before the workflow begins.
+activation_steps_append = []
+
+# Persistent facts kept in mind for the whole run. Literal sentence, `skill:` or `file:` glob.
+persistent_facts = [
+  "EasyPOS là nền tảng bán hàng – xuất hóa đơn – kê khai thuế cho doanh nghiệp và hộ kinh doanh Việt Nam, do SoftDreams phát triển.",
+  "Quy trình BA: ... → họp chốt → wireframe trắng đen (Excalidraw) → wireframe màu (Figma, skill này) → SRS → stories. Màn Figma là đầu vào cho bảng UI của SRS.",
+  "Màu chính của sản phẩm là xanh #0074BD. File Figma gốc có ghi màu chính là teal — không dùng teal.",
+]
+
+# Executed when the workflow completes. String or array.
+on_complete = ""
+
+# Figma library chứa variables/styles/components EasyPOS. Trống = chưa dựng (chạy intent Library).
+figma_library_url = ""
+
+# File Figma mặc định để vẽ màn (có thể để trống, hỏi mỗi lần).
+figma_target_url = ""
+
+# Font cho số và tiền. Sản phẩm thật dùng SF Pro Display (không có sẵn trên Windows/Figma web);
+# đổi thành "SF Pro Display" nếu cả team đã cài font này.
+number_font = "Inter"
+
+# Nguồn icon: "library" = chỉ dùng Icon/* trong library;
+# "lucide-svg" = thiếu thì tải SVG Lucide (thay thế cho Iconsax của sản phẩm thật).
+icon_source = "lucide-svg"
+
+# Where wireframes usually live (scanned during Discovery).
+input_globs = [
+  "docs/ux-designs/**/wireframes/*.excalidraw",
+  "docs/ux-designs/**/DESIGN.md",
+  "docs/ux-designs/**/EXPERIENCE.md",
+]
+
+# Output folder, relative to the UX workspace of the feature.
+output_subfolder = "figma"
+
+# Routing beyond local files at Finalize.
+external_handoffs = [
+  "Hỏi người dùng có muốn cập nhật link Figma vào mục 'Tài liệu liên quan' của brief/SRS đang có của nghiệp vụ này không — không tự sửa.",
+]

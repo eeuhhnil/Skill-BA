@@ -1,0 +1,2082 @@
+<!doctype html>
+<html lang="vi" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phiếu Kiểm Kê Ý Tưởng</title>
+<style>
+/* ============================================================
+   NGÔN NGỮ THỊ GIÁC: phiếu đếm kho — giấy kraft, mực carbon,
+   nhãn bin, vạch barcode, gạch tally, lằn chênh lệch đỏ/xanh.
+   ============================================================ */
+
+:root{
+  color-scheme: light dark;
+
+  --paper:      #ece3d0;
+  --paper-deep: #e0d4bb;
+  --card:       #f8f3e7;
+  --card-2:     #f2ebda;
+  --ink:        #241e15;
+  --ink-2:      #5f5544;
+  --ink-3:      #8b7f69;
+  --line:       #cbbc9e;
+  --line-soft:  #ddd1b6;
+  --grid:       rgba(80,62,30,.055);
+  --hole:       #d8cbb0;
+
+  --steel:      #4f5a66;
+  --amber:      #b9631a;
+  --amber-bg:   #f6e6d0;
+  --red:        #a83422;
+  --red-bg:     #f7e0da;
+  --green:      #23694a;
+  --green-bg:   #dcebe0;
+  --blue:       #2a567f;
+  --blue-bg:    #dee7f1;
+  --violet:     #5b4285;
+  --violet-bg:  #e7e1f2;
+
+  --shadow:     0 1px 0 rgba(36,30,21,.10), 0 10px 26px -18px rgba(36,30,21,.55);
+  --shadow-lift:0 2px 0 rgba(36,30,21,.12), 0 20px 40px -24px rgba(36,30,21,.6);
+
+  --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --sans: "Segoe UI", Roboto, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+
+  --r: 3px;
+  --maxw: 1180px;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:      #14161a;
+    --paper-deep: #0e1013;
+    --card:       #1b1f25;
+    --card-2:     #21262e;
+    --ink:        #ece5d6;
+    --ink-2:      #b3a994;
+    --ink-3:      #8a8172;
+    --line:       #39404b;
+    --line-soft:  #2b3139;
+    --grid:       rgba(190,210,235,.045);
+    --hole:       #2b3139;
+
+    --steel:      #93a2b4;
+    --amber:      #e6a154;
+    --amber-bg:   #2e2418;
+    --red:        #ec8271;
+    --red-bg:     #33201d;
+    --green:      #63c396;
+    --green-bg:   #162a22;
+    --blue:       #83b6e8;
+    --blue-bg:    #17232f;
+    --violet:     #b3a0e0;
+    --violet-bg:  #221d33;
+
+    --shadow:     0 1px 0 rgba(0,0,0,.5), 0 12px 30px -20px rgba(0,0,0,.9);
+    --shadow-lift:0 2px 0 rgba(0,0,0,.55), 0 24px 46px -26px rgba(0,0,0,1);
+  }
+}
+
+:root[data-theme="dark"]{
+  --paper:      #14161a;
+  --paper-deep: #0e1013;
+  --card:       #1b1f25;
+  --card-2:     #21262e;
+  --ink:        #ece5d6;
+  --ink-2:      #b3a994;
+  --ink-3:      #8a8172;
+  --line:       #39404b;
+  --line-soft:  #2b3139;
+  --grid:       rgba(190,210,235,.045);
+  --hole:       #2b3139;
+
+  --steel:      #93a2b4;
+  --amber:      #e6a154;
+  --amber-bg:   #2e2418;
+  --red:        #ec8271;
+  --red-bg:     #33201d;
+  --green:      #63c396;
+  --green-bg:   #162a22;
+  --blue:       #83b6e8;
+  --blue-bg:    #17232f;
+  --violet:     #b3a0e0;
+  --violet-bg:  #221d33;
+
+  --shadow:     0 1px 0 rgba(0,0,0,.5), 0 12px 30px -20px rgba(0,0,0,.9);
+  --shadow-lift:0 2px 0 rgba(0,0,0,.55), 0 24px 46px -26px rgba(0,0,0,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background-color: var(--paper);
+  background-image:
+    repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 30px);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap{ max-width: var(--maxw); margin:0 auto; padding: 0 16px; }
+
+a{ color: var(--blue); }
+
+h1,h2,h3,h4{ margin:0; line-height:1.2; font-weight:700; }
+
+::selection{ background: var(--amber); color: var(--paper); }
+
+.skip{
+  position:absolute; left:-9999px; top:0; background:var(--card); color:var(--ink);
+  padding:10px 14px; z-index:99; border:2px solid var(--ink);
+}
+.skip:focus{ left:8px; top:8px; }
+
+:focus-visible{ outline:2.5px solid var(--amber); outline-offset:3px; }
+
+/* ---------- vạch barcode dựng thuần CSS ---------- */
+.barcode{
+  height:34px; width:100%;
+  background-image: repeating-linear-gradient(90deg,
+    var(--ink) 0 2px, transparent 2px 5px,
+    var(--ink) 5px 6px, transparent 6px 9px,
+    var(--ink) 9px 13px, transparent 13px 15px,
+    var(--ink) 15px 16px, transparent 16px 20px,
+    var(--ink) 20px 23px, transparent 23px 24px,
+    var(--ink) 24px 26px, transparent 26px 31px,
+    var(--ink) 31px 34px, transparent 34px 36px,
+    var(--ink) 36px 37px, transparent 37px 41px);
+  opacity:.82;
+}
+.barcode.thin{ height:18px; opacity:.5; }
+
+/* ---------- gạch tally ---------- */
+.tally{ display:inline-flex; gap:7px; vertical-align:middle; }
+.tally svg{ display:block; }
+.tally svg path, .tally svg line{ stroke: currentColor; stroke-width:1.9; stroke-linecap:round; fill:none; }
+
+/* =========================================================
+   HEADER: thẻ treo hàng (hang tag) đính lên kiện hàng
+   ========================================================= */
+header.tag{
+  position:relative;
+  margin: 22px auto 10px;
+  max-width: var(--maxw);
+}
+.tagbody{
+  position:relative;
+  margin: 0 16px;
+  background: var(--card);
+  border:1.5px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-lift);
+  padding: 22px 20px 20px;
+  overflow:hidden;
+}
+.tagbody::before{
+  /* dải kẻ mép trái như phiếu đục lỗ */
+  content:""; position:absolute; left:0; top:0; bottom:0; width:30px;
+  background:
+    radial-gradient(circle at 15px 26px, var(--hole) 0 4.5px, transparent 5px),
+    repeating-linear-gradient(to bottom, transparent 0 40px, var(--hole) 40px 40px);
+  background-repeat: repeat-y, no-repeat;
+  background-size: 30px 40px, 100% 100%;
+  border-right:1px dashed var(--line);
+  opacity:.9;
+}
+.tagbody > *{ position:relative; }
+.taginner{ padding-left: 38px; }
+@media (max-width: 640px){
+  .tagbody::before{ display:none; }
+  .taginner{ padding-left:0; }
+}
+
+.kicker{
+  font-family: var(--mono);
+  font-size: 11.5px; letter-spacing:.18em; text-transform:uppercase;
+  color: var(--ink-3);
+  display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center;
+  margin-bottom: 14px;
+}
+.kicker b{ color: var(--amber); font-weight:700; letter-spacing:.18em; }
+
+h1{
+  font-family: var(--serif);
+  font-size: clamp(28px, 6.2vw, 52px);
+  letter-spacing:-.015em;
+  margin: 0 0 4px;
+}
+h1 .sub{
+  display:block; font-family:var(--mono); font-weight:600;
+  font-size: clamp(11px,2.6vw,13px); letter-spacing:.24em; text-transform:uppercase;
+  color: var(--amber); margin-bottom:10px;
+}
+.topic{
+  font-family: var(--serif);
+  font-size: clamp(17px, 3.4vw, 22px);
+  color: var(--ink);
+  margin: 10px 0 0; max-width: 58ch;
+}
+.goal{
+  margin-top:14px; padding:12px 14px;
+  border-left:4px solid var(--green);
+  background: var(--green-bg);
+  border-radius: 0 var(--r) var(--r) 0;
+  font-size: 15px;
+}
+.goal .lbl{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+  color: var(--green); display:block; margin-bottom:3px; font-weight:700;
+}
+
+/* dải chỉ số dạng ô phiếu đếm */
+.counts{
+  margin-top:20px;
+  display:grid; gap:0;
+  grid-template-columns: repeat(4, 1fr);
+  border:1.5px solid var(--line);
+  border-radius: var(--r);
+  overflow:hidden;
+  background: var(--card-2);
+}
+@media (max-width: 560px){ .counts{ grid-template-columns: repeat(2,1fr); } }
+.cell{
+  padding: 12px 12px 11px;
+  border-right:1px solid var(--line-soft);
+  border-bottom:1px solid var(--line-soft);
+}
+.cell:nth-child(4n){ border-right:0; }
+@media (max-width:560px){
+  .cell{ border-right:1px solid var(--line-soft); }
+  .cell:nth-child(2n){ border-right:0; }
+}
+.cell .n{
+  font-family: var(--mono); font-variant-numeric: tabular-nums;
+  font-size: clamp(26px,6vw,34px); font-weight:700; line-height:1;
+  display:block; color: var(--ink);
+}
+.cell .k{
+  font-family: var(--mono); font-size:10.5px; letter-spacing:.14em;
+  text-transform:uppercase; color: var(--ink-3); margin-top:6px; display:block;
+}
+.cell.hl .n{ color: var(--amber); }
+
+.tagfoot{ margin-top:18px; }
+
+/* nút đổi nền */
+.themebtn{
+  position:absolute; top:14px; right:14px; z-index:5;
+  font-family: var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  background: var(--card-2); color: var(--ink-2);
+  border:1.5px solid var(--line); border-radius: var(--r);
+  padding:7px 10px; cursor:pointer;
+}
+.themebtn:hover{ color: var(--ink); border-color: var(--ink-3); }
+
+/* =========================================================
+   NAV: dãy nhãn bin
+   ========================================================= */
+nav.bins{
+  position: sticky; top:0; z-index:20;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom:1px solid var(--line);
+  margin-top: 22px;
+}
+@supports not (backdrop-filter: blur(4px)){ nav.bins{ background: var(--paper); } }
+.binscroll{
+  max-width:var(--maxw); margin:0 auto;
+  display:flex; gap:6px; align-items:stretch;
+  overflow-x:auto; padding: 8px 16px;
+  scrollbar-width: thin;
+}
+.binscroll::-webkit-scrollbar{ height:5px; }
+.binscroll::-webkit-scrollbar-thumb{ background: var(--line); border-radius:9px; }
+.bin{
+  flex: 0 0 auto;
+  display:inline-flex; align-items:center; gap:7px;
+  font-family: var(--mono); font-size:11px; letter-spacing:.06em;
+  text-decoration:none; color: var(--ink-2);
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card);
+  padding: 5px 9px 5px 5px;
+  white-space:nowrap;
+}
+.bin:hover{ color: var(--ink); border-color: var(--ink-3); background: var(--card-2); }
+.bin i{
+  font-style:normal; font-weight:700;
+  background: var(--ink); color: var(--paper);
+  border-radius:2px; padding: 2px 5px; font-size:10px;
+}
+.bin.final{ border-color: var(--amber); }
+.bin.final i{ background: var(--amber); color:#fff; }
+
+/* =========================================================
+   KHUNG CHUNG CHO MỖI KỸ THUẬT
+   ========================================================= */
+main{ padding-bottom: 60px; }
+
+section.tech{ padding: 46px 0 12px; scroll-margin-top: 58px; }
+
+.tech-head{
+  display:flex; gap:14px; align-items:flex-start;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px; margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+.tech-num{
+  flex:0 0 auto;
+  font-family:var(--mono); font-weight:700; font-size:13px;
+  background: var(--ink); color: var(--paper);
+  padding: 6px 9px; border-radius:2px; letter-spacing:.06em;
+  line-height:1;
+}
+.tech-titles{ flex:1 1 240px; min-width:0; }
+.tech-titles h2{
+  font-family: var(--serif);
+  font-size: clamp(22px, 4.6vw, 31px);
+  letter-spacing:-.01em;
+}
+.tech-titles p{
+  margin: 5px 0 0; color: var(--ink-2); font-size: 14.5px; max-width: 70ch;
+}
+.tech-meta{
+  flex:0 0 auto; text-align:right;
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color: var(--ink-3);
+  display:flex; flex-direction:column; align-items:flex-end; gap:4px;
+}
+@media (max-width:640px){
+  .tech-meta{ text-align:left; align-items:flex-start; width:100%; }
+}
+
+/* thẻ insight dùng chung */
+.insight{
+  margin-top: 22px;
+  position:relative;
+  background: var(--amber-bg);
+  border:1.5px solid var(--amber);
+  border-radius: var(--r);
+  padding: 16px 18px 16px 18px;
+  box-shadow: var(--shadow);
+}
+.insight .lbl{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+  color: var(--amber); font-weight:700; display:block; margin-bottom:6px;
+}
+.insight p{ margin:0; font-size: 16px; font-family: var(--serif); line-height:1.5; }
+
+/* =========================================================
+   1. JOB TO BE DONE — xấp thẻ treo "thuê để…"
+   ========================================================= */
+.jobs{
+  display:grid; gap:12px;
+  grid-template-columns: repeat(auto-fill, minmax(255px,1fr));
+}
+.job{
+  position:relative;
+  background: var(--card);
+  border:1px solid var(--line);
+  border-left: 4px solid var(--steel);
+  border-radius: var(--r);
+  padding: 13px 14px 13px 34px;
+  box-shadow: var(--shadow);
+  font-size: 15px;
+}
+.job::before{
+  /* lỗ đục thẻ treo */
+  content:""; position:absolute; left:12px; top:15px;
+  width:9px; height:9px; border-radius:50%;
+  border:1.5px solid var(--line); background: var(--paper);
+}
+.job .pre{ color: var(--ink-3); font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+.job b{ font-weight:700; }
+.job:nth-child(3n+1){ border-left-color: var(--amber); }
+.job:nth-child(3n+2){ border-left-color: var(--green); }
+.job:nth-child(3n){ border-left-color: var(--blue); }
+
+/* =========================================================
+   2. PERSONA JOURNEY — các lối đi trong kho (aisle)
+   ========================================================= */
+.aisles{
+  display:grid; gap:14px;
+  grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
+}
+.aisle{
+  border:1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  display:flex; flex-direction:column;
+  overflow:hidden;
+}
+.aisle > header{
+  background: var(--steel);
+  color: #fff;
+  padding: 9px 12px;
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+}
+:root[data-theme="dark"] .aisle > header{ color:#10141a; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .aisle > header{ color:#10141a; } }
+.aisle > header .who{
+  font-family: var(--sans); font-weight:700; font-size: 14px; letter-spacing:.01em;
+}
+.aisle > header .code{
+  font-family: var(--mono); font-size:10.5px; letter-spacing:.14em; opacity:.8;
+}
+.aisle ol{
+  list-style:none; margin:0; padding:0; flex:1;
+  counter-reset: bin;
+}
+.aisle li{
+  counter-increment: bin;
+  display:flex; gap:10px;
+  padding: 10px 12px 10px 10px;
+  border-bottom:1px dashed var(--line-soft);
+  font-size: 14.3px;
+}
+.aisle li:last-child{ border-bottom:0; }
+.aisle li::before{
+  content: counter(bin, decimal-leading-zero);
+  flex:0 0 auto;
+  font-family: var(--mono); font-size:10.5px; font-weight:700;
+  color: var(--ink-3);
+  border:1px solid var(--line); border-radius:2px;
+  padding: 1px 4px; height:fit-content; margin-top:2px;
+  background: var(--card-2);
+}
+.aisle li .who{ color: var(--ink-3); }
+
+/* =========================================================
+   3. STARBURSTING — chùm câu hỏi toả ra từ tâm
+   ========================================================= */
+.starburst{
+  display:grid; gap:12px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "qa  qb  qc"
+    "qd  hub qe"
+    "qf  qf  qf";
+  align-items:stretch;
+}
+@media (max-width: 860px){
+  .starburst{
+    grid-template-columns: 1fr;
+    grid-template-areas: "hub" "qa" "qb" "qc" "qd" "qe" "qf";
+  }
+}
+.hub{
+  grid-area: hub;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; gap:8px;
+  border:2px solid var(--ink);
+  border-radius: var(--r);
+  background: var(--card-2);
+  padding: 18px 14px;
+  box-shadow: var(--shadow);
+}
+.hub svg{ display:block; }
+.hub .t{ font-family:var(--serif); font-size:19px; font-weight:700; line-height:1.15; }
+.hub .s{ font-family:var(--mono); font-size:10.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3); }
+
+.qgroup{
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card); padding: 12px 13px;
+  box-shadow: var(--shadow);
+}
+.qgroup h3{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.2em; text-transform:uppercase;
+  margin-bottom: 9px; display:flex; align-items:center; gap:7px;
+}
+.qgroup h3 .dot{ width:9px; height:9px; border-radius:50%; flex:0 0 auto; }
+.qgroup ul{ list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+.qgroup li{
+  display:flex; gap:8px; font-size:14.2px; line-height:1.45;
+}
+.qgroup li::before{
+  content:"?"; flex:0 0 auto;
+  font-family: var(--serif); font-weight:700; font-size:17px; line-height:1.1;
+  color: currentColor; opacity:.55;
+}
+#q-ai{ grid-area:qa; } #q-cai-gi{ grid-area:qb; } #q-o-dau{ grid-area:qc; }
+#q-khi-nao{ grid-area:qd; } #q-tai-sao{ grid-area:qe; } #q-nhu-the-nao{ grid-area:qf; }
+#q-nhu-the-nao ul{ grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); }
+
+.qg-ai{ color: var(--violet); }        .qg-ai .dot{ background: var(--violet); }
+.qg-what{ color: var(--blue); }        .qg-what .dot{ background: var(--blue); }
+.qg-where{ color: var(--green); }      .qg-where .dot{ background: var(--green); }
+.qg-when{ color: var(--amber); }       .qg-when .dot{ background: var(--amber); }
+.qg-why{ color: var(--red); }          .qg-why .dot{ background: var(--red); }
+.qg-how{ color: var(--steel); }        .qg-how .dot{ background: var(--steel); }
+.qgroup li{ color: var(--ink); }
+
+/* =========================================================
+   4. ASSUMPTION REVERSAL — lật giả định
+   ========================================================= */
+.flips{ display:grid; gap:10px; }
+.flip{
+  display:grid;
+  grid-template-columns: minmax(180px, 0.85fr) 40px 1.3fr;
+  align-items:center;
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow);
+  overflow:hidden;
+}
+@media (max-width: 760px){
+  .flip{ grid-template-columns: 1fr; }
+}
+.flip .was{
+  padding: 12px 14px;
+  background: var(--card-2);
+  color: var(--ink-3);
+  font-size: 14.2px;
+  border-right:1px solid var(--line-soft);
+  position:relative;
+}
+.flip .was .qm{ font-family:var(--serif); }
+.flip .was s{ text-decoration-color: var(--red); text-decoration-thickness:2px; }
+.flip .was .tick{
+  display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; color: var(--red); margin-bottom:4px; font-weight:700;
+}
+.flip .turn{
+  display:flex; align-items:center; justify-content:center;
+  color: var(--amber); font-size: 19px;
+  background: var(--card-2);
+  border-right:1px solid var(--line-soft);
+  align-self:stretch;
+}
+@media (max-width:760px){
+  .flip .was{ border-right:0; border-bottom:1px solid var(--line-soft); }
+  .flip .turn{ border-right:0; padding:4px 0; border-bottom:1px solid var(--line-soft); transform: rotate(90deg); }
+}
+.flip .now{ padding: 12px 14px; font-size: 14.8px; }
+
+/* =========================================================
+   5. FAILURE ANALYSIS — sổ sự cố / đối trọng khắc phục
+   ========================================================= */
+.faillog{
+  border:1.5px solid var(--line); border-radius: var(--r);
+  overflow:hidden; background: var(--card); box-shadow: var(--shadow);
+}
+.faillog .row{
+  display:grid; grid-template-columns: 1fr 1fr;
+  border-bottom:1px solid var(--line-soft);
+}
+.faillog .row:last-child{ border-bottom:0; }
+.faillog .row:nth-child(even){ background: var(--card-2); }
+.faillog .hd{
+  background: var(--ink) !important; color: var(--paper);
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+}
+.faillog .hd > div{ padding: 8px 14px; }
+.faillog .row > div{ padding: 11px 14px; font-size:14.2px; }
+.faillog .bad{
+  border-right:1px solid var(--line-soft);
+  position:relative; padding-left: 30px !important;
+  color: var(--ink);
+}
+.faillog .bad::before{
+  content:"✕"; position:absolute; left:11px; top:11px;
+  color: var(--red); font-size:12px; font-weight:700;
+}
+.faillog .fix{
+  position:relative; padding-left: 30px !important;
+}
+.faillog .fix::before{
+  content:"→"; position:absolute; left:10px; top:11px;
+  color: var(--green); font-size:13px; font-weight:700;
+}
+.faillog .fix .cue{ color: var(--green); font-weight:700; }
+.faillog .hd .bad::before, .faillog .hd .fix::before{ content:none; }
+.faillog .hd .bad, .faillog .hd .fix{ padding-left:14px !important; }
+@media (max-width: 700px){
+  .faillog .row{ grid-template-columns: 1fr; }
+  .faillog .hd{ display:none; }
+  .faillog .bad{ border-right:0; border-bottom:1px dashed var(--line-soft); }
+}
+
+/* =========================================================
+   6. WORST POSSIBLE IDEA — con dấu HỦY rồi lật lại
+   ========================================================= */
+.worsts{
+  display:grid; gap:14px;
+  grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+}
+.worst{
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow);
+  overflow:hidden; display:flex; flex-direction:column;
+}
+.worst .bad{
+  position:relative;
+  background: var(--red-bg);
+  padding: 13px 14px 14px;
+  border-bottom: 2px dashed var(--red);
+  color: var(--ink-2);
+  font-size: 14.2px;
+}
+.worst .bad .stamp{
+  position:absolute; right:8px; top:8px;
+  transform: rotate(-11deg);
+  border:2px solid var(--red); color: var(--red);
+  font-family:var(--mono); font-weight:700; font-size:10px; letter-spacing:.2em;
+  padding: 2px 6px; border-radius:2px; opacity:.72;
+  pointer-events:none;
+}
+.worst .bad .lbl{
+  display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; color: var(--red); font-weight:700; margin-bottom:5px;
+}
+.worst .bad .txt{ display:block; padding-right:62px; }
+.worst .good{
+  padding: 13px 14px; flex:1;
+  font-size: 15px;
+}
+.worst .good .lbl{
+  display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; color: var(--green); font-weight:700; margin-bottom:5px;
+}
+
+/* =========================================================
+   7. TRIZ — hai cực kéo nhau, một lời giải ăn cả hai
+   ========================================================= */
+.trizlist{ display:grid; gap:14px; }
+.triz{
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow); overflow:hidden;
+}
+.poles{
+  display:grid; grid-template-columns: 1fr auto 1fr; align-items:stretch;
+  background: var(--card-2);
+  border-bottom:1px solid var(--line);
+}
+.pole{
+  padding: 12px 14px; font-size:14.5px; font-weight:600;
+}
+.pole.a{ text-align:right; color: var(--blue); }
+.pole.b{ text-align:left; color: var(--red); }
+.pole .tag{
+  display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; opacity:.75; font-weight:700; margin-bottom:3px;
+}
+.vs{
+  display:flex; align-items:center; justify-content:center;
+  padding: 0 12px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.12em;
+  color: var(--ink-3);
+  border-left:1px solid var(--line); border-right:1px solid var(--line);
+  background: var(--paper);
+  white-space:nowrap;
+}
+@media (max-width: 640px){
+  .poles{ grid-template-columns: 1fr; }
+  .pole.a, .pole.b{ text-align:left; }
+  .vs{ border-left:0; border-right:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:5px 12px; }
+}
+.resolve{
+  padding: 13px 14px 14px 40px;
+  position:relative; font-size:15px;
+  background: var(--green-bg);
+}
+.resolve::before{
+  content:"⌥"; position:absolute; left:13px; top:12px;
+  color: var(--green); font-size:16px; font-weight:700;
+}
+.resolve .lbl{
+  display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.2em;
+  text-transform:uppercase; color: var(--green); font-weight:700; margin-bottom:4px;
+}
+
+/* =========================================================
+   8. MORPHOLOGICAL — lưới tham số + tổ hợp tô sáng
+   ========================================================= */
+.morph{
+  border:1.5px solid var(--line); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow); overflow:hidden;
+}
+.mrow{
+  display:grid; grid-template-columns: 170px 1fr;
+  border-bottom:1px solid var(--line-soft);
+}
+.mrow:last-child{ border-bottom:0; }
+@media (max-width: 680px){ .mrow{ grid-template-columns: 1fr; } }
+.mrow .param{
+  padding: 12px 14px;
+  background: var(--card-2);
+  border-right:1px solid var(--line-soft);
+  font-family: var(--mono); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase;
+  color: var(--ink-2); font-weight:700;
+}
+@media (max-width:680px){
+  .mrow .param{ border-right:0; border-bottom:1px dashed var(--line-soft); padding-bottom:8px; }
+}
+.opts{ padding: 10px 12px; display:flex; flex-wrap:wrap; gap:7px; }
+.opt{
+  font-size:13.3px; line-height:1.3;
+  border:1px solid var(--line); border-radius: 2px;
+  padding: 5px 9px;
+  background: var(--paper);
+  color: var(--ink-2);
+  transition: background .16s ease, color .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+.opt.on{
+  background: var(--amber); border-color: var(--amber);
+  color: #fff; font-weight:600;
+  box-shadow: 0 0 0 3px var(--amber-bg);
+}
+:root[data-theme="dark"] .opt.on{ color:#14161a; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .opt.on{ color:#14161a; } }
+
+.combos{ margin-top:16px; display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); }
+.combo{
+  text-align:left; cursor:pointer; font: inherit;
+  border:1.5px dashed var(--line); border-radius: var(--r);
+  background: var(--card); color: var(--ink);
+  padding: 12px 13px;
+  box-shadow: var(--shadow);
+}
+.combo:hover{ border-color: var(--amber); }
+.combo[aria-pressed="true"]{
+  border-style: solid; border-color: var(--amber);
+  background: var(--amber-bg);
+}
+.combo .nm{
+  display:block; font-family:var(--serif); font-weight:700; font-size:16.5px; margin-bottom:5px;
+  color: var(--amber);
+}
+.combo .rec{ display:block; font-family:var(--mono); font-size:12px; color: var(--ink-2); line-height:1.5; }
+.combo .hintx{ display:block; margin-top:7px; font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color: var(--ink-3); }
+.morphhint{
+  margin: 12px 0 0; font-family:var(--mono); font-size:11px; letter-spacing:.08em;
+  color: var(--ink-3); text-transform:uppercase;
+}
+
+/* =========================================================
+   9. SHIP IN 60 — đường cắt
+   ========================================================= */
+.hero-one{
+  border:2px solid var(--ink); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow-lift);
+  padding: 18px 18px 18px 20px; position:relative;
+  margin-bottom: 18px;
+}
+.hero-one .lbl{
+  font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--amber); font-weight:700; display:block; margin-bottom:7px;
+}
+.hero-one p{ margin:0; font-family: var(--serif); font-size: clamp(17px,3.2vw,21px); line-height:1.4; }
+
+.cutline{
+  display:flex; align-items:center; gap:10px;
+  margin: 24px 0 20px;
+  color: var(--red);
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.22em; text-transform:uppercase; font-weight:700;
+}
+.cutline::before, .cutline::after{
+  content:""; height:0; flex:1;
+  border-top: 2px dashed var(--red); opacity:.75;
+}
+.cutline .sc{ font-size:16px; letter-spacing:0; }
+
+.shipcols{ display:grid; gap:14px; grid-template-columns: repeat(auto-fit, minmax(270px,1fr)); }
+.shipgrp{
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow); overflow:hidden;
+}
+.shipgrp > h3{
+  padding: 9px 13px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; gap:8px;
+}
+.shipgrp ul{ list-style:none; margin:0; padding: 10px 13px; display:grid; gap:9px; font-size:14.4px; }
+.shipgrp li{ display:flex; gap:9px; }
+.shipgrp li::before{ flex:0 0 auto; font-family:var(--mono); font-weight:700; font-size:13px; }
+.g-keep > h3{ background: var(--green-bg); color: var(--green); }
+.g-keep li::before{ content:"✓"; color: var(--green); }
+.g-cut > h3{ background: var(--red-bg); color: var(--red); }
+.g-cut li::before{ content:"✂"; color: var(--red); }
+.g-fake > h3{ background: var(--blue-bg); color: var(--blue); }
+.g-fake li::before{ content:"≈"; color: var(--blue); }
+.g-borrow > h3{ background: var(--violet-bg); color: var(--violet); }
+.g-borrow li::before{ content:"↺"; color: var(--violet); }
+
+.danger{
+  margin-top: 20px;
+  border: 2px solid var(--red);
+  border-radius: var(--r);
+  background:
+    repeating-linear-gradient(135deg, var(--red-bg) 0 14px, transparent 14px 28px);
+  padding: 0;
+  box-shadow: var(--shadow);
+}
+.danger .inner{
+  background: var(--card); margin: 5px; padding: 14px 16px; border-radius:2px;
+}
+.danger .lbl{
+  font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--red); font-weight:700; display:block; margin-bottom:6px;
+}
+.danger p{ margin:0; font-size:15.5px; font-family:var(--serif); line-height:1.5; }
+
+/* =========================================================
+   10. BACKCASTING — chạy ngược từ đích về nước đi đầu tiên
+   ========================================================= */
+.back{ display:grid; gap:0; }
+.bk-goals{
+  border:2px solid var(--green); border-radius: var(--r);
+  background: var(--green-bg); padding: 14px 15px;
+}
+.bk-goals .lbl{
+  font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--green); font-weight:700; display:block; margin-bottom:9px;
+}
+.bk-goals ul{ list-style:none; margin:0; padding:0; display:grid; gap:9px; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); }
+.bk-goals li{ display:flex; gap:9px; font-size:14.6px; }
+.bk-goals li::before{ content:"⌖"; color: var(--green); font-weight:700; flex:0 0 auto; }
+
+.bk-arrow{
+  display:flex; justify-content:center; align-items:center;
+  height: 34px; position:relative;
+}
+.bk-arrow::before{
+  content:""; position:absolute; top:0; bottom:0; width:0;
+  border-left: 2px dotted var(--ink-3);
+}
+.bk-arrow span{
+  position:relative; background: var(--paper); padding: 1px 8px;
+  font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  color: var(--ink-3);
+}
+.bk-step{
+  display:grid; grid-template-columns: 96px 1fr;
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow);
+}
+@media (max-width:600px){ .bk-step{ grid-template-columns: 1fr; } }
+.bk-step .t{
+  background: var(--card-2);
+  border-right:1px solid var(--line-soft);
+  padding: 12px 10px;
+  font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.1em;
+  color: var(--steel);
+  display:flex; align-items:center; justify-content:center;
+}
+@media (max-width:600px){
+  .bk-step .t{ border-right:0; border-bottom:1px dashed var(--line-soft); justify-content:flex-start; padding:8px 13px; }
+}
+.bk-step .d{ padding: 12px 14px; font-size:14.8px; }
+.bk-step.critical{ border-color: var(--amber); border-width:1.5px; }
+.bk-step.critical .t{ color: var(--amber); background: var(--amber-bg); }
+
+.bk-moves{
+  border:2px solid var(--ink); border-radius: var(--r);
+  background: var(--card); padding: 14px 15px; box-shadow: var(--shadow-lift);
+}
+.bk-moves .lbl{
+  font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--ink); font-weight:700; display:block; margin-bottom:10px;
+}
+.bk-moves ol{ margin:0; padding:0; list-style:none; display:grid; gap:10px; }
+.bk-moves li{ display:flex; gap:10px; font-size:15.2px; font-family:var(--serif); }
+.bk-moves li b{
+  flex:0 0 auto; font-family:var(--mono); font-size:11px; font-weight:700;
+  background: var(--ink); color: var(--paper); border-radius:2px;
+  padding: 3px 6px; height:fit-content; margin-top:3px;
+}
+
+/* =========================================================
+   TỔNG HỢP — cao trào
+   ========================================================= */
+#tong-hop{
+  margin-top: 54px;
+  border-top: 4px double var(--ink);
+  padding-top: 0;
+  scroll-margin-top: 58px;
+}
+.synth-head{
+  background: var(--ink);
+  color: var(--paper);
+  padding: 26px 16px 24px;
+  margin: 0 -16px 0;
+}
+.synth-head .in{ max-width: calc(var(--maxw) - 32px); margin:0 auto; }
+.synth-head .k{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.24em; text-transform:uppercase;
+  opacity:.65; display:block; margin-bottom:8px;
+}
+.synth-head h2{
+  font-family: var(--serif); font-size: clamp(26px,6vw,44px); letter-spacing:-.015em;
+}
+.synth-head p{
+  margin: 10px 0 0; max-width: 62ch; opacity:.8; font-size:15px;
+}
+
+.synth-body{ padding-top: 30px; }
+
+.blk{ margin-bottom: 34px; }
+.blk > h3{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--ink-3); margin-bottom: 14px;
+  display:flex; align-items:center; gap:10px;
+}
+.blk > h3::after{ content:""; flex:1; height:0; border-top:1px solid var(--line); }
+
+/* xương sống 8 bước */
+.spine{
+  display:flex; flex-wrap:wrap; gap:8px; align-items:stretch;
+}
+.spine .step{
+  flex: 1 1 155px;
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow);
+  padding: 11px 12px 12px;
+  position:relative; min-width:0;
+}
+.spine .step .n{
+  font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.14em;
+  color: var(--paper); background: var(--steel);
+  border-radius:2px; padding:2px 5px; display:inline-block; margin-bottom:7px;
+}
+.spine .step .nm{ font-size:14.2px; font-weight:600; line-height:1.35; display:block; }
+.spine .step.key{ border:2px solid var(--amber); background: var(--amber-bg); }
+.spine .step.key .n{ background: var(--amber); }
+.spine .step.key .nm{ color: var(--ink); }
+
+/* đá đỉnh vòm: snapshot */
+.keystone{
+  margin-top: 16px;
+  display:grid; grid-template-columns: auto 1fr; gap: 0;
+  border:2px solid var(--amber); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow-lift); overflow:hidden;
+}
+@media (max-width: 680px){ .keystone{ grid-template-columns: 1fr; } }
+.keystone .sigil{
+  background: var(--amber-bg);
+  border-right:2px solid var(--amber);
+  padding: 18px 20px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+  min-width: 150px;
+}
+@media (max-width:680px){ .keystone .sigil{ border-right:0; border-bottom:2px solid var(--amber); flex-direction:row; } }
+.keystone .sigil .w{
+  font-family:var(--mono); font-size:12px; letter-spacing:.2em; text-transform:uppercase;
+  color: var(--amber); font-weight:700; text-align:center;
+}
+.keystone .txt{ padding: 18px 20px; }
+.keystone .txt .lbl{
+  font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--amber); font-weight:700; display:block; margin-bottom:8px;
+}
+.keystone .txt p{ margin:0; font-family: var(--serif); font-size: clamp(16px,3vw,19.5px); line-height:1.45; }
+
+/* kết nối chéo — ba kỹ thuật hội tụ */
+.crosses{ display:grid; gap:14px; grid-template-columns: repeat(auto-fit, minmax(290px,1fr)); }
+.cross{
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow);
+  padding: 14px 14px 15px;
+  display:flex; flex-direction:column;
+}
+.cross .srcs{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:0; }
+.src{
+  font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase;
+  border:1px solid var(--violet); color: var(--violet);
+  background: var(--violet-bg);
+  border-radius: 2px; padding: 3px 6px;
+}
+.cross .conv{
+  align-self:center; color: var(--ink-3); font-size:17px; line-height:1;
+  margin: 10px 0 9px;
+}
+.cross .out{
+  border-top:1px solid var(--line-soft); padding-top:11px;
+  font-size:14.8px; line-height:1.5;
+}
+.cross .out b{ color: var(--amber); }
+.cross .hdln{
+  font-family: var(--serif); font-weight:700; font-size:17px; margin-bottom:8px; display:block;
+}
+
+/* insight thường trong tổng hợp */
+.sy-note{
+  border-left: 4px solid var(--blue);
+  background: var(--blue-bg);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 14px 16px; font-size:15.4px; line-height:1.55;
+  margin-bottom: 12px;
+}
+.sy-note .lbl{
+  font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  color: var(--blue); font-weight:700; display:block; margin-bottom:5px;
+}
+
+/* quyết định: v1 vs nâng cao */
+.decision{
+  border:2px solid var(--ink); border-radius: var(--r);
+  background: var(--card); box-shadow: var(--shadow-lift); overflow:hidden;
+}
+.decision > .top{
+  padding: 14px 16px; border-bottom:1px solid var(--line);
+  background: var(--card-2);
+}
+.decision > .top .lbl{
+  font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--ink-3); font-weight:700; display:block; margin-bottom:6px;
+}
+.decision > .top p{ margin:0; font-family:var(--serif); font-size:16.5px; line-height:1.45; }
+.splits{ display:grid; grid-template-columns: 1fr 1fr; }
+@media (max-width: 640px){ .splits{ grid-template-columns: 1fr; } }
+.split{ padding: 14px 16px; }
+.split:first-child{ border-right:1px solid var(--line); }
+@media (max-width:640px){ .split:first-child{ border-right:0; border-bottom:1px solid var(--line); } }
+.split h4{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.18em; text-transform:uppercase;
+  margin-bottom:10px;
+}
+.split.v1 h4{ color: var(--red); }
+.split.adv h4{ color: var(--steel); }
+.chips{ display:flex; flex-wrap:wrap; gap:7px; }
+.chip{
+  font-size:13.4px; border-radius:2px; padding: 5px 9px;
+  border:1px solid var(--line); background: var(--paper); color: var(--ink);
+}
+.split.v1 .chip{ border-color: var(--red); background: var(--red-bg); font-weight:600; }
+.split.adv .chip{ border-style:dashed; color: var(--ink-2); }
+
+/* còn bỏ ngỏ */
+.open{
+  margin-top: 26px;
+  border:1.5px dashed var(--line); border-radius: var(--r);
+  padding: 15px 16px; background: var(--card);
+}
+.open .lbl{
+  font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--ink-3); font-weight:700; display:block; margin-bottom:10px;
+}
+.open ul{ list-style:none; margin:0; padding:0; display:grid; gap:9px; }
+.open li{ display:flex; gap:9px; font-size:14.8px; }
+.open li::before{
+  content:"?"; flex:0 0 auto; font-family:var(--serif); font-weight:700;
+  color: var(--amber); font-size:17px; line-height:1.2;
+}
+
+/* =========================================================
+   THIẾT LẬP PHIÊN (notes / decisions đầu memlog)
+   ========================================================= */
+#thiet-lap{ padding-top: 34px; scroll-margin-top:58px; }
+.setup{
+  border:1px solid var(--line); border-radius: var(--r);
+  background: var(--card-2); box-shadow: var(--shadow);
+  padding: 15px 16px;
+}
+.setup .lbl{
+  font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+  color: var(--ink-3); font-weight:700; display:block; margin-bottom:11px;
+}
+.setup dl{ margin:0; display:grid; gap:10px; }
+.setup .it{ display:flex; gap:10px; font-family:var(--mono); font-size:13.2px; line-height:1.55; color:var(--ink-2); }
+.setup .it .k{
+  flex:0 0 auto; font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+  border:1px solid var(--line); border-radius:2px; padding:2px 5px;
+  height:fit-content; margin-top:3px; color: var(--ink-3); background: var(--paper);
+}
+.setup .it.dec .k{ border-color: var(--amber); color: var(--amber); }
+.setup .it.dir .k{ border-color: var(--green); color: var(--green); }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+footer.end{
+  margin-top: 46px; border-top:1px solid var(--line);
+  padding: 22px 0 8px;
+}
+footer.end .fin{
+  display:flex; flex-wrap:wrap; gap: 10px 20px; align-items:center; justify-content:space-between;
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
+  color: var(--ink-3);
+}
+footer.end .stamp{
+  border:2px solid var(--green); color: var(--green);
+  padding: 4px 9px; border-radius:2px; font-weight:700;
+  transform: rotate(-1.5deg);
+}
+
+@media print{
+  nav.bins, .themebtn{ display:none; }
+  body{ background:#fff; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#noi-dung">Bỏ qua tới nội dung</a>
+
+<!-- ======================= THẺ TREO ĐẦU TRANG ======================= -->
+<header class="tag">
+  <div class="tagbody">
+    <button class="themebtn" id="themebtn" type="button" aria-label="Đổi nền sáng / tối">Sáng / Tối</button>
+    <div class="taginner">
+      <div class="kicker">
+        <span>Phiên brainstorm</span>
+        <span>·</span>
+        <span>2026-09-21</span>
+        <span>·</span>
+        <span>Chế độ: <b>autonomous</b></span>
+        <span>·</span>
+        <span>Trạng thái: <b>complete</b></span>
+      </div>
+
+      <h1>
+        <span class="sub">Phiếu kiểm kê ý tưởng</span>
+        Kiểm kê kho
+      </h1>
+
+      <p class="topic">Nghiệp vụ kiểm kê kho cho phần mềm hiện chưa có nghiệp vụ này</p>
+
+      <div class="goal">
+        <span class="lbl">Mục tiêu phiên</span>
+        Ra được danh sách yêu cầu người dùng (user requirements) cho nghiệp vụ kiểm kê kho
+      </div>
+
+      <div class="counts">
+        <div class="cell hl">
+          <span class="n">99</span>
+          <span class="k">Ý tưởng</span>
+        </div>
+        <div class="cell">
+          <span class="n">17</span>
+          <span class="k">Câu hỏi mở</span>
+        </div>
+        <div class="cell">
+          <span class="n">10</span>
+          <span class="k">Kỹ thuật</span>
+        </div>
+        <div class="cell">
+          <span class="n">10</span>
+          <span class="k">Insight</span>
+        </div>
+      </div>
+
+      <div class="tagfoot">
+        <div class="barcode" role="presentation"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ======================= NHÃN BIN ĐIỀU HƯỚNG ======================= -->
+<nav class="bins" aria-label="Mục lục kỹ thuật">
+  <div class="binscroll">
+    <a class="bin" href="#kt-01"><i>01</i>Job to Be Done</a>
+    <a class="bin" href="#kt-02"><i>02</i>Persona Journey</a>
+    <a class="bin" href="#kt-03"><i>03</i>Starbursting</a>
+    <a class="bin" href="#kt-04"><i>04</i>Assumption Reversal</a>
+    <a class="bin" href="#kt-05"><i>05</i>Failure Analysis</a>
+    <a class="bin" href="#kt-06"><i>06</i>Worst Possible Idea</a>
+    <a class="bin" href="#kt-07"><i>07</i>TRIZ Contradiction</a>
+    <a class="bin" href="#kt-08"><i>08</i>Morphological Analysis</a>
+    <a class="bin" href="#kt-09"><i>09</i>Ship in 60 Minutes</a>
+    <a class="bin" href="#kt-10"><i>10</i>Backcasting</a>
+    <a class="bin final" href="#tong-hop"><i>★</i>Tổng hợp</a>
+  </div>
+</nav>
+
+<main id="noi-dung">
+
+<!-- ======================= THIẾT LẬP PHIÊN ======================= -->
+<section id="thiet-lap" class="wrap" aria-label="Thiết lập phiên">
+  <div class="setup">
+    <span class="lbl">Thiết lập &amp; bối cảnh ghi nhận đầu phiên</span>
+    <dl>
+      <div class="it"><span class="k">Note</span><span>User la Business Analyst; phan mem hien chua co nghiep vu kiem ke kho</span></div>
+      <div class="it dir"><span class="k">Direction</span><span>Dau ra mong muon: danh sach yeu cau nguoi dung</span></div>
+      <div class="it"><span class="k">Note</span><span>Nganh/loai phan mem chua duoc cung cap; gia dinh chay o muc ban le/phan phoi da nganh, co cham cac bien the lo-han dung, serial/IMEI, size-mau, dinh luong</span></div>
+      <div class="it dec"><span class="k">Decision</span><span>Stance: Ideate for me (autonomous); memlog.py khong ton tai nen memlog duoc ghi thu cong</span></div>
+      <div class="it dec"><span class="k">Decision</span><span>Bo ky thuat tu chon: Job to Be Done, Persona Journey, Starbursting, Assumption Reversal, Failure Analysis, Worst Possible Idea, TRIZ Contradiction, Morphological Analysis, Ship in 60 Minutes, Backcasting</span></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ======================= 01 · JOB TO BE DONE ======================= -->
+<section class="tech wrap" id="kt-01">
+  <div class="tech-head">
+    <span class="tech-num">01</span>
+    <div class="tech-titles">
+      <h2>Job to Be Done</h2>
+      <p>Khách hàng không mua “tính năng kiểm kê”. Họ thuê nó làm một việc. Mỗi thẻ dưới đây là một việc được thuê.</p>
+    </div>
+    <div class="tech-meta">
+      <span>11 ý tưởng</span>
+      <span class="tally" aria-hidden="true">
+        <svg width="34" height="18" viewBox="0 0 34 18"><path d="M3 2v14M9 2v14M15 2v14M21 2v14M1 15L24 3"/></svg>
+        <svg width="34" height="18" viewBox="0 0 34 18"><path d="M3 2v14M9 2v14M15 2v14M21 2v14M1 15L24 3"/></svg>
+        <svg width="10" height="18" viewBox="0 0 10 18"><path d="M3 2v14"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <div class="jobs">
+    <div class="job"><span class="pre">Thuê kiểm kê để</span> <b>biết thực sự còn bao nhiêu TIỀN nằm trong kho</b>, không phải để đếm hàng</div>
+    <div class="job"><span class="pre">Thuê để</span> phát hiện <b>thất thoát/ăn cắp nội bộ</b> trước khi nó thành thói quen</div>
+    <div class="job"><span class="pre">Thuê để</span> có con số <b>đóng sổ kế toán cuối kỳ</b> hợp lệ, chịu được kiểm toán</div>
+    <div class="job"><span class="pre">Thuê để</span> <b>quy trách nhiệm</b> khi bàn giao ca / thủ kho nghỉ việc</div>
+    <div class="job"><span class="pre">Thuê để</span> <b>dọn dẹp dữ liệu tồn rác</b> tích tụ nhiều tháng</div>
+    <div class="job"><span class="pre">Thuê để</span> <b>tin lại vào số tồn</b> khi bán hàng, tránh bán hụt hoặc bán quá</div>
+    <div class="job"><span class="pre">Thuê để</span> tìm <b>hàng chết, hàng cận date, hàng hỏng</b> đang chiếm chỗ</div>
+    <div class="job"><span class="pre">Thuê để</span> biết hàng đang <b>NẰM Ở ĐÂU</b>, không chỉ còn bao nhiêu</div>
+    <div class="job"><span class="pre">Thuê để</span> <b>chứng minh với chủ/nhà đầu tư</b> rằng kho được quản lý tử tế</div>
+    <div class="job"><span class="pre">Thuê để</span> làm căn cứ <b>điều chỉnh chính sách đặt hàng</b> và định mức tồn</div>
+    <div class="job"><span class="pre">Thuê để</span> <b>chốt số bàn giao</b> khi sáp nhập, đóng cửa, chuyển kho</div>
+  </div>
+
+  <div class="insight">
+    <span class="lbl">Insight</span>
+    <p>Nhu cầu ẩn: nhiều khách hàng kiểm kê để <strong>NGỦ NGON</strong>, tức là cần cảm giác an tâm chứ không phải độ chính xác tuyệt đối</p>
+  </div>
+</section>
+
+<!-- ======================= 02 · PERSONA JOURNEY ======================= -->
+<section class="tech wrap" id="kt-02">
+  <div class="tech-head">
+    <span class="tech-num">02</span>
+    <div class="tech-titles">
+      <h2>Persona Journey</h2>
+      <p>Năm lối đi trong kho, năm vai khác nhau. Mỗi ô là một nhu cầu đứng tại chỗ của người đó trong hành trình.</p>
+    </div>
+    <div class="tech-meta"><span>18 ý tưởng · 5 vai</span></div>
+  </div>
+
+  <div class="aisles">
+    <div class="aisle">
+      <header><span class="who">Thủ kho</span><span class="code">Lối A</span></header>
+      <ol>
+        <li><span><span class="who">Thủ kho</span> cần biết trước lịch kiểm kê để chuẩn bị sắp xếp kho</span></li>
+        <li><span><span class="who">Thủ kho</span> cần in phiếu đếm theo khu vực/kệ để chia người</span></li>
+        <li><span><span class="who">Thủ kho</span> sợ bị quy trách nhiệm oan, cần bằng chứng đã đếm đúng và quyền yêu cầu đếm lại</span></li>
+        <li><span><span class="who">Thủ kho</span> cần tạm dừng xuất nhập trong lúc đếm, hoặc hệ thống ghi nhận giao dịch phát sinh giữa chừng</span></li>
+      </ol>
+    </div>
+
+    <div class="aisle">
+      <header><span class="who">Nhân viên đếm</span><span class="code">Lối B</span></header>
+      <ol>
+        <li><span><span class="who">Nhân viên đếm thời vụ</span> cần giao diện đơn giản tới mức không cần đào tạo: quét mã, gõ số, next</span></li>
+        <li><span><span class="who">Nhân viên đếm</span> cần làm việc offline khi kho không có wifi/sóng</span></li>
+        <li><span><span class="who">Nhân viên đếm</span> cần thấy tiến độ: đã đếm bao nhiêu, còn bao nhiêu chưa đếm</span></li>
+        <li><span><span class="who">Nhân viên đếm</span> cần ghi nhận được mã lạ không có trong hệ thống (hàng không rõ nguồn gốc)</span></li>
+        <li><span><span class="who">Nhân viên đếm</span> cần KHÔNG nhìn thấy số tồn hệ thống (đếm mù) để khỏi bị dẫn dắt</span></li>
+      </ol>
+    </div>
+
+    <div class="aisle">
+      <header><span class="who">Kế toán kho</span><span class="code">Lối C</span></header>
+      <ol>
+        <li><span><span class="who">Kế toán kho</span> cần bảng chênh lệch quy ra GIÁ TRỊ TIỀN, không chỉ số lượng</span></li>
+        <li><span><span class="who">Kế toán kho</span> cần phiếu điều chỉnh tăng/giảm sinh tự động từ kết quả kiểm kê</span></li>
+        <li><span><span class="who">Kế toán kho</span> cần định khoản đúng chuẩn (1381 thiếu chờ xử lý / 3381 thừa chờ xử lý)</span></li>
+        <li><span><span class="who">Kế toán kho</span> cần cut-off rõ ràng: giao dịch nào tính trước, cái nào tính sau thời điểm kiểm kê</span></li>
+      </ol>
+    </div>
+
+    <div class="aisle">
+      <header><span class="who">Quản lý</span><span class="code">Lối D</span></header>
+      <ol>
+        <li><span><span class="who">Quản lý</span> cần duyệt hoặc từ chối kết quả trước khi nó chạm vào tồn kho thật</span></li>
+        <li><span><span class="who">Quản lý</span> cần ngưỡng cảnh báo: lệch quá X phần trăm hoặc quá Y đồng thì bắt buộc đếm lại</span></li>
+        <li><span><span class="who">Quản lý</span> cần lịch sử kiểm kê để biết kho nào, người nào hay lệch</span></li>
+      </ol>
+    </div>
+
+    <div class="aisle">
+      <header><span class="who">Kiểm toán viên</span><span class="code">Lối E</span></header>
+      <ol>
+        <li><span><span class="who">Kiểm toán viên</span> cần biên bản kiểm kê có chữ ký các bên, xuất PDF, không sửa được sau khi chốt</span></li>
+        <li><span><span class="who">Kiểm toán viên</span> cần audit trail: ai sửa số gì, lúc nào, từ bao nhiêu thành bao nhiêu</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 03 · STARBURSTING ======================= -->
+<section class="tech wrap" id="kt-03">
+  <div class="tech-head">
+    <span class="tech-num">03</span>
+    <div class="tech-titles">
+      <h2>Starbursting</h2>
+      <p>Không một câu trả lời nào ở đây. Chỉ có 17 câu hỏi toả ra từ tâm — thứ phải chốt trước khi viết dòng yêu cầu đầu tiên.</p>
+    </div>
+    <div class="tech-meta"><span>17 câu hỏi · 6 hướng</span></div>
+  </div>
+
+  <div class="starburst">
+    <div class="hub">
+      <svg width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+        <g stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".5">
+          <line x1="26" y1="3" x2="26" y2="16"/>
+          <line x1="26" y1="36" x2="26" y2="49"/>
+          <line x1="3" y1="26" x2="16" y2="26"/>
+          <line x1="36" y1="26" x2="49" y2="26"/>
+          <line x1="9.7" y1="9.7" x2="18.9" y2="18.9"/>
+          <line x1="33.1" y1="33.1" x2="42.3" y2="42.3"/>
+          <line x1="42.3" y1="9.7" x2="33.1" y2="18.9"/>
+          <line x1="18.9" y1="33.1" x2="9.7" y2="42.3"/>
+        </g>
+        <circle cx="26" cy="26" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      </svg>
+      <span class="t">Một đợt<br>kiểm kê kho</span>
+      <span class="s">Tâm chùm hỏi</span>
+    </div>
+
+    <div class="qgroup qg-ai" id="q-ai">
+      <h3><span class="dot"></span>Ai</h3>
+      <ul>
+        <li>AI được quyền khởi tạo một đợt kiểm kê?</li>
+        <li>AI được quyền nhập số đếm, và một người có được đếm chính kho mình đang giữ không?</li>
+        <li>AI duyệt, và có cần nhiều cấp duyệt theo giá trị chênh lệch không?</li>
+      </ul>
+    </div>
+
+    <div class="qgroup qg-what" id="q-cai-gi">
+      <h3><span class="dot"></span>Cái gì</h3>
+      <ul>
+        <li>CÁI GÌ được kiểm: toàn bộ kho, một ngành hàng, một kệ, một nhóm ABC, hay một danh sách tự chọn?</li>
+        <li>CÁI GÌ tính là tồn hệ thống tại thời điểm đếm: có gồm hàng đã đặt chưa xuất, hàng đang đi đường, hàng gửi đại lý không?</li>
+      </ul>
+    </div>
+
+    <div class="qgroup qg-where" id="q-o-dau">
+      <h3><span class="dot"></span>Ở đâu</h3>
+      <ul>
+        <li>Ở ĐÂU: kiểm kê theo kho, theo khu vực, theo vị trí kệ (bin), hay cả chuỗi cửa hàng cùng lúc?</li>
+        <li>Ở ĐÂU: hàng ký gửi tại kho đối tác có nằm trong phạm vi kiểm kê không?</li>
+      </ul>
+    </div>
+
+    <div class="qgroup qg-when" id="q-khi-nao">
+      <h3><span class="dot"></span>Khi nào</h3>
+      <ul>
+        <li>KHI NÀO: định kỳ theo lịch tự động hay chỉ tạo tay khi cần?</li>
+        <li>KHI NÀO: kiểm kê có bắt buộc rơi vào lúc kho đóng cửa không?</li>
+        <li>KHI NÀO một phiếu kiểm kê hết hiệu lực nếu bị treo quá lâu?</li>
+      </ul>
+    </div>
+
+    <div class="qgroup qg-why" id="q-tai-sao">
+      <h3><span class="dot"></span>Tại sao</h3>
+      <ul>
+        <li>TẠI SAO số lệch: hệ thống có bắt buộc nhập lý do lệch theo danh mục không?</li>
+        <li>TẠI SAO phải đếm lại: điều kiện nào kích hoạt vòng đếm thứ hai?</li>
+      </ul>
+    </div>
+
+    <div class="qgroup qg-how" id="q-nhu-the-nao">
+      <h3><span class="dot"></span>Như thế nào</h3>
+      <ul>
+        <li>NHƯ THẾ NÀO nhập số: gõ tay, quét barcode, import Excel, hay app mobile?</li>
+        <li>NHƯ THẾ NÀO với hàng có lô/hạn dùng: đếm tới mức lô hay chỉ mức mã hàng?</li>
+        <li>NHƯ THẾ NÀO với hàng serial/IMEI: quét từng cái hay chỉ đếm số lượng?</li>
+        <li>NHƯ THẾ NÀO khi hai người đếm ra hai số khác nhau?</li>
+        <li>NHƯ THẾ NÀO để hủy một đợt kiểm kê đã lỡ tạo?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 04 · ASSUMPTION REVERSAL ======================= -->
+<section class="tech wrap" id="kt-04">
+  <div class="tech-head">
+    <span class="tech-num">04</span>
+    <div class="tech-titles">
+      <h2>Assumption Reversal</h2>
+      <p>Mỗi dòng: bên trái là giả định mặc định của ngành bị gạch bỏ, bên phải là thứ xuất hiện khi lật ngược nó.</p>
+    </div>
+    <div class="tech-meta"><span>12 phép lật</span></div>
+  </div>
+
+  <div class="flips">
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>kho phải đóng cửa</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">kiểm kê động, hệ thống tự bù trừ giao dịch phát sinh trong lúc đếm vào snapshot</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>kiểm kê là sự kiện lớn cuối năm</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">kiểm kê luân phiên mỗi ngày vài chục mã, cả năm phủ hết kho, không bao giờ đóng kho</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>người đếm phải thấy tên hàng</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">đếm mù hoàn toàn, chỉ quét mã, hệ thống tự khớp</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>phải đếm hết mọi thứ</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">chỉ đếm nhóm A chiếm 80 phần trăm giá trị, nhóm C lấy mẫu</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>kết quả luôn ghi đè tồn</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">kết quả chỉ là đề xuất, phải qua duyệt mới ghi đè</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>một phiếu một người</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">nhiều người đếm song song trên cùng một phiếu, hệ thống gộp kết quả</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>kiểm kê xong là hết</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">mỗi chênh lệch sinh một case điều tra có người chịu trách nhiệm và hạn xử lý</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>chênh lệch là lỗi thủ kho</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">phân loại nguyên nhân, phần lớn lệch đến từ nhập liệu sai chứ không phải mất hàng</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>đếm bằng người</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">RFID, cân đếm, camera AI; hệ thống chỉ cần nhận kết quả từ nguồn ngoài qua API</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>tồn kho là một con số</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">tồn kho là khoảng tin cậy, hiển thị độ tin cậy từng mã theo lịch sử lệch</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>kiểm kê cần phần mềm</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">đếm trên giấy rồi import Excel vẫn là luồng chính ở nhiều khách hàng</div>
+    </div>
+    <div class="flip">
+      <div class="was"><span class="tick">Giả định</span><s>chỉ kiểm số lượng</s></div>
+      <div class="turn" aria-hidden="true">⟲</div>
+      <div class="now">kiểm cả chất lượng (hỏng, cận date, sai vị trí) trong cùng một lượt đi kho</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 05 · FAILURE ANALYSIS ======================= -->
+<section class="tech wrap" id="kt-05">
+  <div class="tech-head">
+    <span class="tech-num">05</span>
+    <div class="tech-titles">
+      <h2>Failure Analysis</h2>
+      <p>Sổ sự cố: 15 cách một đợt kiểm kê hỏng ngoài thực địa, và đối trọng mà hệ thống phải có để chặn nó.</p>
+    </div>
+    <div class="tech-meta"><span>15 cặp hỏng → chặn</span></div>
+  </div>
+
+  <div class="faillog">
+    <div class="row hd"><div class="bad">Hỏng như thế nào</div><div class="fix">Hệ thống phải có</div></div>
+
+    <div class="row"><div class="bad">Đếm xong mới phát hiện có đơn xuất phát sinh giữa chừng gây lệch giả</div><div class="fix"><span class="cue">cần</span> khóa hoặc ghi nhận cut-off</div></div>
+    <div class="row"><div class="bad">Nhân viên đếm trùng một kệ hai lần</div><div class="fix"><span class="cue">cần</span> đánh dấu vùng đã đếm và cảnh báo quét trùng</div></div>
+    <div class="row"><div class="bad">Bỏ sót một góc kho</div><div class="fix"><span class="cue">cần</span> checklist vùng và không cho chốt khi còn vùng chưa đếm</div></div>
+    <div class="row"><div class="bad">Hàng cùng mã nằm ở ba vị trí nhưng chỉ đếm một</div><div class="fix"><span class="cue">cần</span> đếm theo vị trí rồi cộng dồn theo mã</div></div>
+    <div class="row"><div class="bad">Quy đổi đơn vị sai (đếm thùng nhập thành lon)</div><div class="fix"><span class="cue">cần</span> chọn đơn vị khi nhập và hệ thống tự quy đổi</div></div>
+    <div class="row"><div class="bad">Mất mạng giữa chừng mất hết số đã đếm</div><div class="fix"><span class="cue">cần</span> lưu nháp tự động và offline-first</div></div>
+    <div class="row"><div class="bad">Sếp duyệt nhầm phiếu sai</div><div class="fix"><span class="cue">cần</span> xem trước tác động (giá trị điều chỉnh) ngay trên màn hình duyệt</div></div>
+    <div class="row"><div class="bad">Điều chỉnh tồn xong nhưng giá vốn không đổi</div><div class="fix"><span class="cue">cần</span> quyết định giá nào áp cho phần thừa/thiếu</div></div>
+    <div class="row"><div class="bad">Kiểm kê xong rồi sửa ngược lại số</div><div class="fix"><span class="cue">cần</span> khóa phiếu sau khi chốt và bắt tạo phiếu điều chỉnh mới</div></div>
+    <div class="row"><div class="bad">Hai đợt kiểm kê chồng lấn cùng một mã hàng</div><div class="fix"><span class="cue">cần</span> chặn tạo đợt trùng phạm vi khi đợt cũ chưa chốt</div></div>
+    <div class="row"><div class="bad">Hàng trả về chưa nhập kho nằm trong khu vực đếm</div><div class="fix"><span class="cue">cần</span> khu vực loại trừ hoặc trạng thái hàng</div></div>
+    <div class="row"><div class="bad">Đếm đúng nhưng mã vạch dán sai sản phẩm</div><div class="fix"><span class="cue">cần</span> ghi chú bất thường kèm ảnh chụp</div></div>
+    <div class="row"><div class="bad">Import Excel sai cột ghi đè sạch dữ liệu</div><div class="fix"><span class="cue">cần</span> preview và validate trước khi import</div></div>
+    <div class="row"><div class="bad">Kiểm kê kéo dài ba ngày mỗi ngày một snapshot khác nhau</div><div class="fix"><span class="cue">cần</span> khóa snapshot tại thời điểm tạo phiếu</div></div>
+    <div class="row"><div class="bad">Không ai nhớ lần kiểm kê trước ra sao</div><div class="fix"><span class="cue">cần</span> báo cáo so sánh giữa các kỳ</div></div>
+  </div>
+</section>
+
+<!-- ======================= 06 · WORST POSSIBLE IDEA ======================= -->
+<section class="tech wrap" id="kt-06">
+  <div class="tech-head">
+    <span class="tech-num">06</span>
+    <div class="tech-titles">
+      <h2>Worst Possible Idea</h2>
+      <p>Cố tình thiết kế tệ nhất có thể, rồi lật lại. Nửa trên mỗi thẻ đóng dấu HỦY; nửa dưới là yêu cầu thật rơi ra.</p>
+    </div>
+    <div class="tech-meta"><span>10 thẻ tệ → lật</span></div>
+  </div>
+
+  <div class="worsts">
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">cho mọi nhân viên tự sửa tồn bất cứ lúc nào không cần lý do</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>mọi thay đổi tồn phải đi qua chứng từ có loại, có người, có lý do</div>
+    </div>
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">kiểm kê xong ghi đè ngay không ai duyệt</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>bắt buộc trạng thái chờ duyệt kèm preview tác động</div>
+    </div>
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">hiện số tồn hệ thống to đùng cạnh ô nhập</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>đếm mù là mặc định, muốn xem tồn phải có quyền riêng</div>
+    </div>
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">bắt đếm 20.000 mã trong một phiếu duy nhất</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>chia phiếu con theo vùng/người rồi gộp lên phiếu cha</div>
+    </div>
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">chỉ có ô số, không cho ghi chú gì</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>mỗi dòng đếm cho phép ghi chú, ảnh chụp và lý do</div>
+    </div>
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">xóa vĩnh viễn phiếu kiểm kê cũ cho nhẹ database</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>lưu trữ vĩnh viễn để phục vụ kiểm toán và phân tích xu hướng</div>
+    </div>
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">chỉ một người duy nhất trong công ty được làm kiểm kê</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>tách quyền đếm / duyệt / điều chỉnh thành ba vai trò độc lập</div>
+    </div>
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">gửi kết quả qua Zalo cho kế toán tự gõ lại</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>tích hợp thẳng sang kế toán, không nhập lại lần hai</div>
+    </div>
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">bắt buộc online liên tục</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>hàng đợi offline, đồng bộ khi có mạng</div>
+    </div>
+    <div class="worst">
+      <div class="bad"><span class="stamp">Hủy</span><span class="lbl">Tệ nhất</span><span class="txt">cho chốt phiếu khi còn 500 mã chưa đếm mà không cảnh báo</span></div>
+      <div class="good"><span class="lbl">Lật lại</span>buộc trả lời một quyết định nghiệp vụ lớn là mã chưa đếm sẽ bị coi là tồn 0 hay giữ nguyên tồn cũ</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 07 · TRIZ ======================= -->
+<section class="tech wrap" id="kt-07">
+  <div class="tech-head">
+    <span class="tech-num">07</span>
+    <div class="tech-titles">
+      <h2>TRIZ Contradiction</h2>
+      <p>Bảy cặp mâu thuẫn kéo ngược nhau. Không chọn bên nào — mỗi dải xanh bên dưới là cách thắng cả hai.</p>
+    </div>
+    <div class="tech-meta"><span>7 mâu thuẫn được gỡ</span></div>
+  </div>
+
+  <div class="trizlist">
+    <div class="triz">
+      <div class="poles">
+        <div class="pole a"><span class="tag">Muốn</span>chính xác cao</div>
+        <div class="vs">chống lại</div>
+        <div class="pole b"><span class="tag">Nhưng</span>phải dừng kinh doanh</div>
+      </div>
+      <div class="resolve"><span class="lbl">Thắng cả hai bằng</span>snapshot cộng nhật ký giao dịch, kho vẫn chạy và hệ thống quy chiếu về thời điểm gốc</div>
+    </div>
+
+    <div class="triz">
+      <div class="poles">
+        <div class="pole a"><span class="tag">Muốn</span>đếm nhanh</div>
+        <div class="vs">chống lại</div>
+        <div class="pole b"><span class="tag">Nhưng</span>đếm đúng</div>
+      </div>
+      <div class="resolve"><span class="lbl">Thắng cả hai bằng</span>một vòng đếm nhanh toàn bộ, chỉ đếm lại vòng hai những mã vượt ngưỡng lệch</div>
+    </div>
+
+    <div class="triz">
+      <div class="poles">
+        <div class="pole a"><span class="tag">Muốn</span>kiểm soát chặt</div>
+        <div class="vs">chống lại</div>
+        <div class="pole b"><span class="tag">Nhưng</span>nhân viên làm được việc</div>
+      </div>
+      <div class="resolve"><span class="lbl">Thắng cả hai bằng</span>chặt ở khâu duyệt và điều chỉnh, cực lỏng ở khâu nhập số</div>
+    </div>
+
+    <div class="triz">
+      <div class="poles">
+        <div class="pole a"><span class="tag">Muốn</span>đếm mù chống gian lận</div>
+        <div class="vs">chống lại</div>
+        <div class="pole b"><span class="tag">Nhưng</span>nhu cầu biết đang đếm đúng hàng</div>
+      </div>
+      <div class="resolve"><span class="lbl">Thắng cả hai bằng</span>hiện tên và ảnh sản phẩm nhưng ẩn số lượng</div>
+    </div>
+
+    <div class="triz">
+      <div class="poles">
+        <div class="pole a"><span class="tag">Muốn</span>chi tiết tới lô/serial</div>
+        <div class="vs">chống lại</div>
+        <div class="pole b"><span class="tag">Nhưng</span>tốc độ nhập liệu</div>
+      </div>
+      <div class="resolve"><span class="lbl">Thắng cả hai bằng</span>bắt buộc chi tiết chỉ với nhóm hàng giá trị cao</div>
+    </div>
+
+    <div class="triz">
+      <div class="poles">
+        <div class="pole a"><span class="tag">Muốn</span>linh hoạt cho khách nhỏ</div>
+        <div class="vs">chống lại</div>
+        <div class="pole b"><span class="tag">Nhưng</span>chuẩn mực cho khách lớn</div>
+      </div>
+      <div class="resolve"><span class="lbl">Thắng cả hai bằng</span>cấu hình theo kho, bật tắt từng bước quy trình</div>
+    </div>
+
+    <div class="triz">
+      <div class="poles">
+        <div class="pole a"><span class="tag">Muốn</span>kiểm kê thường xuyên</div>
+        <div class="vs">chống lại</div>
+        <div class="pole b"><span class="tag">Nhưng</span>tốn nhân lực</div>
+      </div>
+      <div class="resolve"><span class="lbl">Thắng cả hai bằng</span>cycle counting tự sinh danh sách mã cần đếm mỗi ngày theo ABC và độ lệch lịch sử</div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 08 · MORPHOLOGICAL ======================= -->
+<section class="tech wrap" id="kt-08">
+  <div class="tech-head">
+    <span class="tech-num">08</span>
+    <div class="tech-titles">
+      <h2>Morphological Analysis</h2>
+      <p>Sáu tham số, mỗi tham số một dãy lựa chọn. Bấm một tổ hợp bên dưới để thấy đường đi của nó xuyên qua lưới.</p>
+    </div>
+    <div class="tech-meta"><span>6 tham số · 3 tổ hợp</span></div>
+  </div>
+
+  <div class="morph" id="morphgrid">
+    <div class="mrow">
+      <div class="param">Phạm vi</div>
+      <div class="opts">
+        <span class="opt" data-opt="p1a">toàn kho</span>
+        <span class="opt" data-opt="p1b">khu vực</span>
+        <span class="opt" data-opt="p1c">ngành hàng</span>
+        <span class="opt" data-opt="p1d">nhóm ABC</span>
+        <span class="opt" data-opt="p1e">danh sách chọn tay</span>
+        <span class="opt" data-opt="p1f">theo nhà cung cấp</span>
+      </div>
+    </div>
+    <div class="mrow">
+      <div class="param">Thời điểm</div>
+      <div class="opts">
+        <span class="opt" data-opt="p2a">định kỳ theo lịch</span>
+        <span class="opt" data-opt="p2b">đột xuất</span>
+        <span class="opt" data-opt="p2c">khi bàn giao thủ kho</span>
+        <span class="opt" data-opt="p2d">tự kích hoạt khi lệch vượt ngưỡng</span>
+      </div>
+    </div>
+    <div class="mrow">
+      <div class="param">Cách đếm</div>
+      <div class="opts">
+        <span class="opt" data-opt="p3a">gõ tay</span>
+        <span class="opt" data-opt="p3b">barcode</span>
+        <span class="opt" data-opt="p3c">QR</span>
+        <span class="opt" data-opt="p3d">RFID</span>
+        <span class="opt" data-opt="p3e">cân đếm</span>
+        <span class="opt" data-opt="p3f">import Excel</span>
+        <span class="opt" data-opt="p3g">API từ thiết bị ngoài</span>
+      </div>
+    </div>
+    <div class="mrow">
+      <div class="param">Độ sâu dữ liệu</div>
+      <div class="opts">
+        <span class="opt" data-opt="p4a">mức mã hàng</span>
+        <span class="opt" data-opt="p4b">mức lô-hạn dùng</span>
+        <span class="opt" data-opt="p4c">mức serial-IMEI</span>
+        <span class="opt" data-opt="p4d">mức vị trí kệ</span>
+        <span class="opt" data-opt="p4e">mức size-màu</span>
+      </div>
+    </div>
+    <div class="mrow">
+      <div class="param">Xử lý lệch</div>
+      <div class="opts">
+        <span class="opt" data-opt="p5a">ghi đè thẳng</span>
+        <span class="opt" data-opt="p5b">sinh phiếu điều chỉnh chờ duyệt</span>
+        <span class="opt" data-opt="p5c">treo case điều tra</span>
+        <span class="opt" data-opt="p5d">quy trách nhiệm bồi thường</span>
+      </div>
+    </div>
+    <div class="mrow">
+      <div class="param">Người thực hiện</div>
+      <div class="opts">
+        <span class="opt" data-opt="p6a">một người</span>
+        <span class="opt" data-opt="p6b">hai người độc lập đối chiếu</span>
+        <span class="opt" data-opt="p6c">đội nhiều người chia vùng</span>
+        <span class="opt" data-opt="p6d">thuê bên thứ ba</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="morphhint" id="morphhint">Chọn một tổ hợp để tô sáng lưới</p>
+
+  <div class="combos">
+    <button class="combo" type="button" aria-pressed="false" data-cells="p1d,p2b,p6b,p4c,p5c">
+      <span class="nm">Gói chống thất thoát hàng giá trị cao</span>
+      <span class="rec">đột xuất + nhóm A + đếm mù hai người + mức serial + tự treo case</span>
+      <span class="hintx">Tổ hợp chưa khai thác</span>
+    </button>
+    <button class="combo" type="button" aria-pressed="false" data-cells="p2a,p1e,p3b,p4a,p5a,p6a">
+      <span class="nm">Cycle counting nhẹ cho cửa hàng</span>
+      <span class="rec">hằng ngày + danh sách hệ thống tự sinh + barcode + mức mã hàng + ghi đè thẳng nếu lệch dưới ngưỡng</span>
+      <span class="hintx">Tổ hợp chưa khai thác</span>
+    </button>
+    <button class="combo" type="button" aria-pressed="false" data-cells="p1a,p2a,p3f,p4b,p5b">
+      <span class="nm">Gói đóng sổ kiểm toán</span>
+      <span class="rec">toàn kho + cuối năm + import Excel + mức lô + duyệt nhiều cấp</span>
+      <span class="hintx">Tổ hợp chưa khai thác</span>
+    </button>
+  </div>
+
+  <div class="insight">
+    <span class="lbl">Insight</span>
+    <p>Ba tổ hợp trên chính là <strong>ba gói tính năng bán được cho ba phân khúc khách hàng khác nhau</strong>, không phải ba biến thể kỹ thuật</p>
+  </div>
+</section>
+
+<!-- ======================= 09 · SHIP IN 60 MINUTES ======================= -->
+<section class="tech wrap" id="kt-09">
+  <div class="tech-head">
+    <span class="tech-num">09</span>
+    <div class="tech-titles">
+      <h2>Ship in 60 Minutes</h2>
+      <p>Đặt một đường cắt lên toàn bộ ý tưởng. Phía trên đường cắt là thứ vào v1; phía dưới là thứ bỏ lại, giả lập hoặc mượn.</p>
+    </div>
+    <div class="tech-meta"><span>7 quyết định cắt</span></div>
+  </div>
+
+  <div class="hero-one">
+    <span class="lbl">Nếu chỉ được giữ một thứ</span>
+    <p>Bảng so sánh tồn hệ thống với tồn thực tế cho một danh sách mã, kèm nút sinh phiếu điều chỉnh. <em>Mọi thứ khác là trang trí.</em></p>
+  </div>
+
+  <div class="shipcols">
+    <div class="shipgrp g-keep">
+      <h3>Trên đường cắt · vào v1</h3>
+      <ul>
+        <li><span><strong>MVP tối thiểu:</strong> tạo phiếu kiểm kê, chốt snapshot, nhập số đếm bằng tay hoặc Excel, xem chênh lệch, duyệt, điều chỉnh tồn</span></li>
+        <li><span><strong>Không cắt được ở v1:</strong> snapshot cut-off, phân quyền duyệt, audit trail, khóa không sửa sau khi chốt</span></li>
+      </ul>
+    </div>
+
+    <div class="shipgrp g-borrow">
+      <h3>Mượn được, khỏi làm mới</h3>
+      <ul>
+        <li><span>Dùng lại chứng từ điều chỉnh tồn kho đã có sẵn thay vì đẻ chứng từ mới</span></li>
+        <li><span>Dùng lại cơ chế phân quyền và danh mục kho hiện có của phần mềm</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cutline"><span class="sc" aria-hidden="true">✂</span> Đường cắt <span class="sc" aria-hidden="true">✂</span></div>
+
+  <div class="shipcols">
+    <div class="shipgrp g-cut">
+      <h3>Dưới đường cắt · cắt được ở v1</h3>
+      <ul>
+        <li><span>đếm mù</span></li>
+        <li><span>đếm hai người</span></li>
+        <li><span>cycle counting tự động</span></li>
+        <li><span>RFID</span></li>
+        <li><span>app mobile offline</span></li>
+      </ul>
+    </div>
+
+    <div class="shipgrp g-fake">
+      <h3>Fake được ở v1</h3>
+      <ul>
+        <li><span>App mobile chỉ cần là web responsive mở trên điện thoại, dùng camera quét mã</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="danger">
+    <div class="inner">
+      <span class="lbl">Rủi ro chết người nếu ship thiếu snapshot</span>
+      <p>Mọi con số chênh lệch đều sai, tính năng vô dụng nhưng <strong>khách vẫn tin và ra quyết định theo nó</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 10 · BACKCASTING ======================= -->
+<section class="tech wrap" id="kt-10">
+  <div class="tech-head">
+    <span class="tech-num">10</span>
+    <div class="tech-titles">
+      <h2>Backcasting</h2>
+      <p>Đọc từ trên xuống là đi ngược thời gian: bắt đầu ở đích đã đạt, lùi từng bước, chạm đất ở nước đi đầu tiên phải làm hôm nay.</p>
+    </div>
+    <div class="tech-meta"><span>4 đích · 4 bước lùi · 2 nước đi</span></div>
+  </div>
+
+  <div class="back">
+    <div class="bk-goals">
+      <span class="lbl">Đích đã đạt</span>
+      <ul>
+        <li><span>Khách chạy kiểm kê toàn kho 20.000 mã trong một buổi tối, sáng hôm sau mở bán với số tồn tin được</span></li>
+        <li><span>Tỷ lệ chính xác tồn kho hiển thị trên dashboard và tăng dần qua từng kỳ, đây là KPI bán được cho chủ doanh nghiệp</span></li>
+        <li><span>Kế toán không phải gõ lại một con số nào</span></li>
+        <li><span>Kiểm toán viên tự tra cứu được biên bản mà không cần hỏi ai</span></li>
+      </ul>
+    </div>
+
+    <div class="bk-arrow"><span>lùi lại</span></div>
+    <div class="bk-step">
+      <div class="t">Lùi 1 bước</div>
+      <div class="d">Cần báo cáo inventory accuracy theo kỳ, theo kho, theo người đếm</div>
+    </div>
+
+    <div class="bk-arrow"><span>lùi lại</span></div>
+    <div class="bk-step">
+      <div class="t">Lùi 2 bước</div>
+      <div class="d">Cần lưu dữ liệu lịch sử từng lần đếm ở mức dòng, không chỉ mức tổng</div>
+    </div>
+
+    <div class="bk-arrow"><span>lùi lại</span></div>
+    <div class="bk-step">
+      <div class="t">Lùi 3 bước</div>
+      <div class="d">Cần mô hình dữ liệu tách bạch phiếu kiểm kê, dòng đếm, và phiếu điều chỉnh sinh ra từ nó</div>
+    </div>
+
+    <div class="bk-arrow"><span>lùi lại</span></div>
+    <div class="bk-step critical">
+      <div class="t">Lùi 4 bước</div>
+      <div class="d">Phải chốt quy tắc snapshot và cut-off ngay từ đầu vì <strong>sửa sau sẽ phá toàn bộ dữ liệu lịch sử</strong></div>
+    </div>
+
+    <div class="bk-arrow"><span>chạm đất</span></div>
+    <div class="bk-moves">
+      <span class="lbl">Nước đi phải làm ngay</span>
+      <ol>
+        <li><b>01</b><span>Định nghĩa tồn hệ thống tại thời điểm T một cách không mơ hồ, kèm danh sách loại giao dịch nào tính và không tính</span></li>
+        <li><b>02</b><span>Chốt danh sách trạng thái phiếu và ai được phép chuyển trạng thái nào</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= TỔNG HỢP — CAO TRÀO ======================= -->
+<section id="tong-hop">
+  <div class="synth-head">
+    <div class="in">
+      <span class="k">Kết quả kiểm kê · điểm giao của mười kỹ thuật</span>
+      <h2>Tổng hợp</h2>
+      <p>Mười kỹ thuật chạy độc lập. Đây là chỗ chúng va vào nhau — và chỗ va nhau chính là yêu cầu cốt lõi.</p>
+    </div>
+  </div>
+
+  <div class="wrap synth-body">
+
+    <!-- xương sống -->
+    <div class="blk">
+      <h3>Xương sống nghiệp vụ · tám bước</h3>
+      <div class="spine">
+        <div class="step"><span class="n">B1</span><span class="nm">Lập kế hoạch và phạm vi</span></div>
+        <div class="step key"><span class="n">B2</span><span class="nm">Chốt snapshot cut-off</span></div>
+        <div class="step"><span class="n">B3</span><span class="nm">Đếm</span></div>
+        <div class="step"><span class="n">B4</span><span class="nm">Đối chiếu chênh lệch</span></div>
+        <div class="step"><span class="n">B5</span><span class="nm">Đếm lại có điều kiện</span></div>
+        <div class="step"><span class="n">B6</span><span class="nm">Duyệt</span></div>
+        <div class="step"><span class="n">B7</span><span class="nm">Điều chỉnh tồn và hạch toán</span></div>
+        <div class="step"><span class="n">B8</span><span class="nm">Lưu trữ và báo cáo</span></div>
+      </div>
+      <div class="sy-note" style="margin-top:14px">
+        <span class="lbl">Insight</span>
+        Xương sống nghiệp vụ lộ ra rõ. <strong>Mọi yêu cầu đều gắn được vào một trong tám bước này.</strong>
+      </div>
+    </div>
+
+    <!-- đá đỉnh vòm -->
+    <div class="blk">
+      <h3>Điểm gãy duy nhất</h3>
+      <div class="keystone">
+        <div class="sigil">
+          <svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true">
+            <rect x="6" y="16" width="44" height="30" rx="2" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/>
+            <path d="M6 26h44" stroke="currentColor" stroke-width="1.5" opacity=".45"/>
+            <path d="M20 16V9h16v7" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/>
+            <circle cx="28" cy="34" r="8" fill="none" stroke="currentColor" stroke-width="2.4"/>
+            <path d="M28 29v5.4l3.6 2.4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+          <span class="w">Snapshot<br>cut-off</span>
+        </div>
+        <div class="txt">
+          <span class="lbl">Insight quan trọng nhất</span>
+          <p>Yêu cầu quan trọng nhất không nằm ở màn hình đếm mà ở <strong>định nghĩa snapshot/cut-off</strong>. Đây là thứ duy nhất sai là hỏng toàn bộ tính năng mà người dùng không nhận ra.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- kết nối chéo -->
+    <div class="blk">
+      <h3>Kết nối chéo · nơi các kỹ thuật độc lập cùng chỉ về một chỗ</h3>
+      <div class="crosses">
+
+        <div class="cross">
+          <span class="hdln">Đếm mù</span>
+          <div class="srcs">
+            <span class="src">Persona Journey</span>
+            <span class="src">TRIZ</span>
+            <span class="src">Worst Possible Idea #3</span>
+          </div>
+          <div class="conv" aria-hidden="true">↓</div>
+          <div class="out">
+            Đếm mù (Persona Journey) chính là lời giải cho mâu thuẫn chống gian lận trong TRIZ, và cũng là cái lật của Worst Possible Idea số ba. Ba kỹ thuật độc lập cùng chỉ về một yêu cầu — <b>dấu hiệu yêu cầu đó là cốt lõi chứ không phải nice-to-have</b>.
+          </div>
+        </div>
+
+        <div class="cross">
+          <span class="hdln">Cycle counting</span>
+          <div class="srcs">
+            <span class="src">Assumption Reversal</span>
+            <span class="src">TRIZ</span>
+            <span class="src">Morphological Analysis</span>
+          </div>
+          <div class="conv" aria-hidden="true">↓</div>
+          <div class="out">
+            Nó không phải một tính năng phụ mà là <b>một chế độ kiểm kê ngang hàng với kiểm kê toàn bộ</b>, cần được mô hình hóa từ đầu.
+          </div>
+        </div>
+
+        <div class="cross">
+          <span class="hdln">Ngưỡng lệch (threshold)</span>
+          <div class="srcs">
+            <span class="src">Kích hoạt đếm lại</span>
+            <span class="src">Quyết định cấp duyệt</span>
+            <span class="src">Có tự ghi đè hay không</span>
+          </div>
+          <div class="conv" aria-hidden="true">↓</div>
+          <div class="out">
+            Một khái niệm duy nhất phục vụ ba việc khác nhau. Nên thiết kế thành <b>một cấu hình dùng chung</b>.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- hai insight còn lại -->
+    <div class="blk">
+      <h3>Hai hệ quả kéo theo</h3>
+      <div class="sy-note">
+        <span class="lbl">Insight</span>
+        Ba gói phân khúc từ Morphological Analysis (chống thất thoát hàng giá trị cao / cycle counting cho cửa hàng / đóng sổ kiểm toán) nên là <strong>ba bộ cấu hình mặc định</strong>, không phải ba module riêng.
+      </div>
+      <div class="sy-note">
+        <span class="lbl">Insight</span>
+        Nhu cầu cảm xúc phát hiện ở Job to Be Done (<em>kiểm kê để ngủ ngon</em>) giải thích tại sao <strong>báo cáo tỷ lệ chính xác tồn kho theo kỳ</strong> lại quan trọng hơn bản thân con số chênh lệch một lần.
+      </div>
+    </div>
+
+    <!-- quyết định -->
+    <div class="blk">
+      <h3>Quyết định · hướng ưu tiên cho danh sách yêu cầu</h3>
+      <div class="decision">
+        <div class="top">
+          <span class="lbl">Decision</span>
+          <p>Bám theo tám bước xương sống, đánh dấu rõ nhóm bắt buộc v1 tách khỏi nhóm nâng cao.</p>
+        </div>
+        <div class="splits">
+          <div class="split v1">
+            <h4>Bắt buộc v1</h4>
+            <div class="chips">
+              <span class="chip">snapshot</span>
+              <span class="chip">phân quyền duyệt</span>
+              <span class="chip">audit trail</span>
+              <span class="chip">khóa sau chốt</span>
+            </div>
+          </div>
+          <div class="split adv">
+            <h4>Nhóm nâng cao</h4>
+            <div class="chips">
+              <span class="chip">đếm mù</span>
+              <span class="chip">hai người</span>
+              <span class="chip">cycle counting</span>
+              <span class="chip">RFID</span>
+              <span class="chip">offline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="open">
+        <span class="lbl">Còn bỏ ngỏ · chờ BA xác nhận</span>
+        <ul>
+          <li><span>Ngành hàng và loại phần mềm</span></li>
+          <li><span>Độ sâu dữ liệu cần hỗ trợ (lô / serial / size-màu)</span></li>
+          <li><span>Xử lý hàng đang đi đường hay gửi đại lý</span></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="end">
+  <div class="wrap">
+    <div class="barcode thin" role="presentation"></div>
+    <div class="fin" style="margin-top:14px">
+      <span>Phiên brainstorm · kiểm kê kho · 2026-09-21 · chế độ autonomous</span>
+      <span>99 ý tưởng · 17 câu hỏi · 10 kỹ thuật · 10 insight</span>
+      <span class="stamp">Đã chốt</span>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- đổi nền sáng / tối ---- */
+  var root = document.documentElement;
+  var btn  = document.getElementById("themebtn");
+  var KEY  = "kk-theme";
+  try{
+    var saved = localStorage.getItem(KEY);
+    if(saved === "light" || saved === "dark"){ root.setAttribute("data-theme", saved); }
+  }catch(e){}
+
+  function currentIsDark(){
+    var t = root.getAttribute("data-theme");
+    if(t === "dark") return true;
+    if(t === "light") return false;
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+
+  if(btn){
+    btn.addEventListener("click", function(){
+      var next = currentIsDark() ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+
+  /* ---- lưới hình thái: tô sáng tổ hợp ---- */
+  var combos = Array.prototype.slice.call(document.querySelectorAll(".combo"));
+  var opts   = Array.prototype.slice.call(document.querySelectorAll(".opt"));
+  var hint   = document.getElementById("morphhint");
+  var DEFAULT_HINT = "Chọn một tổ hợp để tô sáng lưới";
+
+  function clearAll(){
+    opts.forEach(function(o){ o.classList.remove("on"); });
+    combos.forEach(function(c){ c.setAttribute("aria-pressed","false"); });
+  }
+
+  combos.forEach(function(c){
+    c.addEventListener("click", function(){
+      var wasOn = c.getAttribute("aria-pressed") === "true";
+      clearAll();
+      if(wasOn){
+        if(hint){ hint.textContent = DEFAULT_HINT; }
+        return;
+      }
+      c.setAttribute("aria-pressed","true");
+      var cells = (c.getAttribute("data-cells") || "").split(",");
+      cells.forEach(function(id){
+        var el = document.querySelector('.opt[data-opt="' + id.trim() + '"]');
+        if(el){ el.classList.add("on"); }
+      });
+      var nm = c.querySelector(".nm");
+      if(hint && nm){ hint.textContent = "Đang tô sáng: " + nm.textContent; }
+    });
+  });
+})();
+</script>
+</body>
+</html>
