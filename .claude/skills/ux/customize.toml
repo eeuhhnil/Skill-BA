@@ -56,8 +56,9 @@ validation_report_template = "assets/validation-report-template.html"
 # Figma exports / sketches), optional mockups/ and wireframes/ (promoted
 # artifacts), optional validation-report.* all land inside
 # {ux_output_path}/{run_folder_pattern}/.
-ux_output_path = "{planning_artifacts}/ux-designs"
-run_folder_pattern = "ux-{project_name}-{date}"
+# One UX workspace per feature: `docs/<nghiệp-vụ>/ux/`. `{feature}` = business-feature slug (see SKILL.md activation step 3).
+ux_output_path = "docs"
+run_folder_pattern = "{feature}/ux"
 
 # Creative tools registry. Collaborative renderers invoked on demand during
 # Discovery and at Finalize. Entry forms: `file:PATH`, `skill:NAME`,
@@ -76,12 +77,7 @@ creative_tools = [
 # Polish passes applied to DESIGN.md and EXPERIENCE.md at finalize.
 # Entries: `skill:NAME`, `file:PATH`, or plain text directive.
 # Suggested order: structural → content/voice → prose mechanics.
-# The default entry runs review's two editorial lenses in order:
-# structure, then prose on top of the structure findings. The `lenses=` suffix
-# names them; drop it to let review pick what fits the content.
-doc_standards = [
-  "skill:review lenses=structure,prose",
-]
+doc_standards = []
 
 # Information retrieval registry. Consulted on demand when the conversation
 # surfaces a matching need. Distinct from creative_tools (artifact production).

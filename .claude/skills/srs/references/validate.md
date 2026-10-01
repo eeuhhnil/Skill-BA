@@ -4,7 +4,7 @@ Chấm SRS theo `{workflow.validation_checklist}` và theo chính mục đích c
 
 ## Chuẩn bị
 - Đọc `srs.md`, `.memlog.md` (nếu có) và các đầu vào trong frontmatter `inputs` — một bài chấm bỏ qua quyết định đã ghi là bài chấm nông.
-- Nếu SRS có `confluence_page_id`: đọc bản trên Confluence (`python tools/confluence_scan.py fetch <id>`) để phát hiện chênh lệch giữa file và trang.
+- Nếu SRS có `confluence_page_id`: đọc bản trên Confluence (`uv run tools/confluence_scan.py fetch <id>`) để phát hiện chênh lệch giữa file và trang.
 
 ## Chấm
 - Đi qua từng mục A–H của checklist. Mỗi mục **Chưa đạt** phải trích dòng/đoạn cụ thể.

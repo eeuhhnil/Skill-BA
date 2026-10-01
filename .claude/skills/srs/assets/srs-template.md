@@ -123,7 +123,7 @@ version: 1
 created: {YYYY-MM-DD}
 updated: {YYYY-MM-DD}
 inputs: []             # brief, impact, wireframe, figma, SRS cũ
-confluence_page_id:    # điền khi đã đẩy / khi cập nhật trang có sẵn
+confluence_page_id:    # điền khi SRS được cập nhật từ một trang Confluence có sẵn
 ---
 ```
 

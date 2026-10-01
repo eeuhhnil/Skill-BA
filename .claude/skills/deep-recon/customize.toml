@@ -30,8 +30,9 @@ persistent_facts = []
 # and Run all use the same folder shape: brief.md (drafted prompts),
 # imports/ (originals, full fidelity), digests/ (extracted claims),
 # research.md (the canonical summary/report), .memlog.md.
-research_output_path = "{planning_artifacts}/research"
-run_folder_pattern = "{research_type}-{topic_slug}-{date}"
+# `{feature}` = business-feature slug (see SKILL.md activation step 2).
+research_output_path = "docs/{feature}/research"
+run_folder_pattern = "{research_type}-{topic_slug}"
 
 # Seed document for a new run.
 research_template = "assets/research.template.md"
@@ -140,7 +141,7 @@ external_sources = []
 
 # Polish passes applied to research.md at finalize. Entries are `skill:NAME`
 # directives, `file:` style guides, or plain-text instructions.
-doc_standards = ["skill:review lenses=structure,prose"]
+doc_standards = []
 
 # Handoffs executed at finalize to route the report beyond local files. Each
 # entry names the tool and what to do; unavailable tools are skipped and

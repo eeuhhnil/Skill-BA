@@ -17,7 +17,7 @@ Nguyên tắc:
 
 - Đường dẫn trần tính từ thư mục skill; `{skill-root}` = thư mục skill; `{project-root}` = thư mục dự án.
 - `{workflow.<name>}` = trường trong bảng `[workflow]` của `customize.toml` (file override thắng).
-- `{ux_workspace}` = thư mục UX của nghiệp vụ, vd `docs/ux-designs/ux-kiem-ke-kho-2026-09-21/`. Wireframe nằm ở `{ux_workspace}/wireframes/`.
+- `{ux_workspace}` = thư mục UX của nghiệp vụ, `docs/{feature}/ux/` (vd `docs/kiem-ke-kho/ux/`). Wireframe nằm ở `{ux_workspace}/wireframes/` (bản nháp chưa chốt có thể còn ở `{ux_workspace}/.working/`).
 - **Vai trò file tham chiếu** — chỉ nạp phần cần cho việc đang làm:
   - `references/tokens.md` — màu, chữ, radius, shadow, spacing và tên Figma variable/style tương ứng.
   - `references/components.md` — spec từng component: kích thước, trạng thái, thuộc tính variant.
@@ -32,7 +32,7 @@ Nguyên tắc:
 
 ## On Activation
 
-1. Resolve customization: `uv run {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --project-root {project-root} --key workflow`. Lỗi thì đọc thẳng `{skill-root}/customize.toml` và `{project-root}/_bmad/custom/easypos-design*.toml` nếu có.
+1. Resolve customization: `uv run {project-root}/.claude/skills/help/scripts/resolve_customization.py --skill {skill-root} --project-root {project-root} --key workflow`. Lỗi thì đọc thẳng `{skill-root}/customize.toml` và `{project-root}/_bmad/custom/easypos-design*.toml` nếu có.
 2. Chạy `{workflow.activation_steps_prepend}`. Coi `{workflow.persistent_facts}` là bối cảnh nền.
 3. **Nạp skill Figma trước khi gọi `use_figma`** (bắt buộc): `/figma-use`; nếu không có plugin thì đọc resource `skill://figma/figma-use/SKILL.md`. Vẽ màn thì nạp thêm `figma-generate-design`; dựng library thì nạp `figma-generate-library`.
 4. `{date}` = ngày hệ thống.
@@ -116,7 +116,7 @@ Không hỏi. Vẽ theo **Đi nhanh**; điểm chưa chốt thì vẽ theo phư�
 ```json
 {"status": "complete", "intent": "draw", "figma_page": "https://www.figma.com/design/...",
  "frames": 0, "drafts": 0, "assumptions": 0, "open_questions": 0,
- "log": "docs/ux-designs/.../figma/figma-log.md"}
+ "log": "docs/<nghiệp-vụ>/ux/figma/figma-log.md"}
 ```
 
 Validate headless: `{"status": "complete", "intent": "validate", "verdict": "...", "issues": 0}`.

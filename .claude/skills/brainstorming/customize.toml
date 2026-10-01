@@ -60,11 +60,12 @@ favorite_techniques = []
 additional_techniques = []
 
 # Session output location. The running log and any final artifacts land inside
-# `{output_dir}/{output_folder_name}/`. `{topic_slug}` is filled from the session
-# topic so each topic gets its own folder — a user can brainstorm several topics
-# without collision. The resume check globs `{output_dir}/*/.memlog.md`.
-output_dir = "{output_folder}/brainstorming"
-output_folder_name = "brainstorm-{topic_slug}-{date}"
+# `{output_dir}/{output_folder_name}/`, i.e. `docs/<nghiệp-vụ>/brainstorming/`.
+# `{feature}` is the business-feature slug (see SKILL.md activation step 3).
+# A second session on the same feature either extends this folder or goes to
+# `docs/<nghiệp-vụ>/brainstorming-{date}/`. The resume check globs `{output_dir}/*/brainstorming*/.memlog.md`.
+output_dir = "docs"
+output_folder_name = "{feature}/brainstorming"
 
 # Executed when the session completes (after artifacts are produced and the user
 # has the paths). Accepts a string scalar (single instruction) or an array of

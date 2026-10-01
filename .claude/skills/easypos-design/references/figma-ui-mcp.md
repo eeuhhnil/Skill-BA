@@ -6,7 +6,7 @@ Dùng khi công cụ vẽ là `mcp__figma-ui__*` thay cho `use_figma`. Plugin v�
 1. `figma_status` → kiểm `pluginConnected`, tên file, số page. Nhiều tab → ghim `sessionId`.
 2. `figma_docs` (không section), rồi `api`, `tokens`, `layout`, `icons` khi cần.
 3. `figma_read get_page_nodes`, `get_variables`, `get_styles`, `get_local_components` → biết file đã có gì. Không sửa frame có sẵn.
-4. Đọc bảng ID Foundations của file (vd `docs/ux-designs/_figma-EP-foundations.md`) — mỗi lần `figma_write` là sandbox mới, phải khai lại ID.
+4. Đọc bảng ID Foundations của file (vd `docs/_figma-EP-foundations.md`) — mỗi lần `figma_write` là sandbox mới, phải khai lại ID.
 
 ## Bẫy đã gặp và cách xử lý
 

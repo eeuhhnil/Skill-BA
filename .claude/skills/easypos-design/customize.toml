@@ -41,9 +41,9 @@ icon_source = "lucide-svg"
 
 # Where wireframes usually live (scanned during Discovery).
 input_globs = [
-  "docs/ux-designs/**/wireframes/*.excalidraw",
-  "docs/ux-designs/**/DESIGN.md",
-  "docs/ux-designs/**/EXPERIENCE.md",
+  "docs/*/ux/**/*.excalidraw",
+  "docs/*/ux/DESIGN.md",
+  "docs/*/ux/EXPERIENCE.md",
 ]
 
 # Output folder, relative to the UX workspace of the feature.

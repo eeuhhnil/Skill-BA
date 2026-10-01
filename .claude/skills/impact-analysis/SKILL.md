@@ -15,15 +15,14 @@ Nguyên tắc:
 
 ## Công cụ
 
-- `tools/confluence_scan.py search|fetch` — tìm và tải trang (chỉ đọc). Chạy từ thư mục gốc dự án.
-- `tools/push_confluence.py` — đẩy tài liệu lên Confluence (chỉ khi người dùng đồng ý).
+- `uv run tools/confluence_scan.py search|fetch` — tìm và tải trang (chỉ đọc). Chạy từ thư mục gốc dự án; `uv` tự cài Python và thư viện cần thiết.
 - Token: biến `CONFLUENCE_PAT` hoặc file `~/.confluence-pat`. Thiếu token → hướng dẫn tạo Personal Access Token trên Confluence; **không xin token qua chat**.
 - File tạm (rank.json, trang tải về) để trong scratchpad, không để trong dự án.
 
 ## Quy trình
 
 ### 1. Nắm thay đổi
-Đọc tài liệu đầu vào. Nếu người dùng chưa chỉ file, tìm trong `docs/` (briefs, specs, prds) và hỏi lại cho chắc. Tóm lại trong 3–5 dòng: thay đổi là gì, **đọc dữ liệu gì, ghi ra dữ liệu gì** (bước 1 của search-method). Xác nhận space Confluence cần quét (mặc định `EP`) và nhánh cần loại (mặc định: TestCase, Nâng cấp, Thay đổi giao diện).
+Đọc tài liệu đầu vào. Nếu người dùng chưa chỉ file, tìm trong `docs/{feature}/brief/` và hỏi lại cho chắc. `{feature}` = slug tên nghiệp vụ (không dấu, chữ thường, nối bằng `-`, vd `quan-ly-ca-ket-ca`). Lấy từ chủ đề hoặc tài liệu đầu vào; nếu `docs/` đã có thư mục của nghiệp vụ này thì dùng lại đúng tên đó; tạo mới thì xác nhận tên với người dùng một lần (headless: không hỏi, tự đặt tên và ghi vào danh sách assumptions). Mọi tài liệu của một nghiệp vụ nằm chung trong `docs/{feature}/`. Tóm lại trong 3–5 dòng: thay đổi là gì, **đọc dữ liệu gì, ghi ra dữ liệu gì** (bước 1 của search-method). Xác nhận space Confluence cần quét (mặc định `EP`) và nhánh cần loại (mặc định: TestCase, Nâng cấp, Thay đổi giao diện).
 
 ### 2. Lập danh sách từ khóa — cho người dùng duyệt
 Nhóm theo các bước 2–6 của search-method, mỗi nhóm kèm đồng nghĩa. Trình bày gọn, hỏi người dùng thêm/bớt. Người dùng thường biết tên gọi nội bộ mà tài liệu đầu vào không có.
@@ -35,7 +34,7 @@ Nhóm theo các bước 2–6 của search-method, mỗi nhóm kèm đồng ngh�
 - Nhiều trang (>15): đọc song song bằng subagent, mỗi subagent một nhóm luồng, trả về nhận định kèm link — không trả nguyên văn trang.
 
 ### 4. Phân tích và viết
-Dùng `assets/impact-template.md`. Ghi vào `docs/impact/impact-{feature}-{YYYY-MM-DD}/impact.md`.
+Dùng `assets/impact-template.md`. Ghi vào `docs/{feature}/impact/impact.md`.
 - Phần A: tài liệu hiện có + khác biệt với đầu vào.
 - B1: trả lời từng câu hỏi của bốn chiều; chiều nào không ảnh hưởng thì nói rõ đã kiểm ở đâu.
 - B2: mỗi dòng một thành phần, có nguồn và người xác nhận. Nỗ lực S/M/L/XL ghi rõ là ước lượng của BA.
@@ -51,13 +50,10 @@ Nêu 3–5 ảnh hưởng lớn nhất và các điểm ở phần C cần ngư�
 ### 6. Nối về tài liệu đầu vào
 Đề xuất đoạn tóm tắt 3–5 dòng + link sang impact.md để chèn vào mục "Phạm vi ảnh hưởng" của brief/spec. **Hỏi trước khi sửa** tài liệu đầu vào. Nếu phần A cho thấy tiền đề của tài liệu đầu vào sai (vd "chưa có nghiệp vụ" trong khi đã có đặc tả), nói thẳng — việc đó không để riêng trong impact.md.
 
-### 7. Confluence
-Hỏi người dùng có muốn đẩy lên Confluence không. Đồng ý → `python tools/push_confluence.py docs/impact/.../impact.md --parent-title "<tiêu đề trang của tài liệu đầu vào>"` (hoặc `--parent-id`), báo lại URL. Tiêu đề trang phải có tiền tố tên nghiệp vụ để không trùng trong space.
-
 ## Headless
-Không hỏi: dùng từ khóa tự lập, không sửa tài liệu đầu vào, không đẩy Confluence. Trả về:
+Không hỏi: dùng từ khóa tự lập, không sửa tài liệu đầu vào. Trả về:
 
 ```json
-{"status": "complete", "impact": "docs/impact/.../impact.md", "pages_matched": 0, "pages_read": 0,
+{"status": "complete", "impact": "docs/<nghiệp-vụ>/impact/impact.md", "pages_matched": 0, "pages_read": 0,
  "existing_spec": "<url hoặc null>", "high_impacts": [], "conflicts": [], "confluence": "skipped"}
 ```

@@ -1,26 +1,43 @@
+# /// script
+# dependencies = ["requests"]
+# ///
 """Tìm và đọc trang trên Confluence Data Center (chỉ đọc) phục vụ phân tích ảnh hưởng.
 
-Token: giống push_confluence.py — biến CONFLUENCE_PAT hoặc file ~/.confluence-pat.
+Token: Personal Access Token của Confluence, đọc từ biến môi trường CONFLUENCE_PAT
+hoặc từ file ~/.confluence-pat (một dòng, chỉ chứa token).
 
 Hai lệnh con:
   search  Tìm theo từ khóa trong một space, gộp và xếp hạng trang theo số từ khóa khớp.
   fetch   Tải nội dung trang về dạng text; --grep chỉ giữ đoạn chứa từ khóa (±1 dòng).
 
 Ví dụ:
-  python tools/confluence_scan.py search --kw "kiểm kê" --kw "tồn kho" --skip TestCase --out rank.json
-  python tools/confluence_scan.py fetch 50698190 50698161 --out-dir pages
-  python tools/confluence_scan.py fetch 50698161 --out-dir pages --grep "tồn kho|giá vốn"
+  uv run tools/confluence_scan.py search --kw "kiểm kê" --kw "tồn kho" --skip TestCase --out rank.json
+  uv run tools/confluence_scan.py fetch 50698190 50698161 --out-dir pages
+  uv run tools/confluence_scan.py fetch 50698161 --out-dir pages --grep "tồn kho|giá vốn"
 """
 import argparse
 import html
 import json
+import os
 import re
 import sys
 from pathlib import Path
 
 import requests
 
-from push_confluence import BASE_URL, SPACE_KEY, load_token
+BASE_URL = "https://confluence-sds.softdreams.vn:8090"
+SPACE_KEY = "EP"
+
+
+def load_token():
+    token = os.environ.get("CONFLUENCE_PAT")
+    if not token:
+        token_file = Path.home() / ".confluence-pat"
+        if token_file.exists():
+            token = token_file.read_text(encoding="utf-8").strip()
+    if not token:
+        sys.exit("Thiếu token: đặt biến CONFLUENCE_PAT hoặc tạo file ~/.confluence-pat")
+    return token
 
 
 def session():

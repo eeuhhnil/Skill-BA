@@ -44,16 +44,6 @@ Agent personas (optional):
   talk to a specific role or wants one perspective's take without running a
   full skill.
 
-Support skills (standalone):
-
-- `review` — runs installed review lenses (adversarial critique, edge cases,
-  verification gaps, structure, prose) over any artifact and reports triaged
-  findings.
-
-These belong to no path and no stage. Each stands on its own: suggest one
-whenever it is useful — before, during, after, or entirely outside the flow
-above — and never present them as required steps.
-
 A project environment may have a subset of these skills supporting the user's
 preferred workflow.
 
@@ -90,8 +80,6 @@ a file's mere presence does not prove completion — check its frontmatter
 - Đã có brief, UI/UX là phần quan trọng, chưa có UX → `ux`.
 - Đã có brief, chưa rõ ảnh hưởng lên hệ thống hiện có → `impact-analysis`.
 - Đã có brief (kèm UX/impact analysis khi liên quan), chưa có SRS → `srs`.
-- SRS đã có bản nháp → gợi ý `review` như một lớp kiểm tra thêm nếu người
-  dùng muốn, bên cạnh Reviewer Gate mà chính `srs` đã có sẵn.
 
 A run is complete when the intent is satisfied and its chosen checks pass —
 not when every skill has been traversed.

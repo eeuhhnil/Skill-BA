@@ -2,6 +2,8 @@
 
 > Dành cho BA và PO. Tài liệu này cho biết **ở mỗi bước của quy trình BA nên gọi skill nào, gọi thế nào, và nhận lại được gì**.
 > Ví dụ xuyên suốt: nghiệp vụ **Kiểm kê kho**.
+>
+> 🛠️ **Lần đầu dùng?** Cài đặt theo [HUONG-DAN-CAI-DAT.md](HUONG-DAN-CAI-DAT.md) trước.
 
 ---
 
@@ -93,7 +95,7 @@ Có 2 cách, cả hai đều được:
 | **Khi nào dùng** | Yêu cầu còn mơ hồ, hoặc cần nhiều hướng giải pháp trước khi chọn |
 | **Câu gọi mẫu** | `Brainstorm giúp tôi hướng giải quyết cho nghiệp vụ kiểm kê kho. Mục tiêu: giảm thời gian kiểm kê cho cửa hàng có trên 1000 mã hàng` |
 | **Đầu vào** | Yêu cầu của khách hàng (file hoặc dán vào chat) |
-| **Đầu ra** | `docs/brainstorming/brainstorm-<nghiệp-vụ>-<ngày>/brainstorm-intent.md` |
+| **Đầu ra** | `docs/<nghiệp-vụ>/brainstorming/brainstorm-intent.md` |
 
 **Skill sẽ làm gì:**
 
@@ -123,7 +125,7 @@ Có 2 cách, cả hai đều được:
 | **Khi nào dùng** | Cần biết đối thủ đã làm tính năng này thế nào, hoặc người dùng phàn nàn gì |
 | **Câu gọi mẫu** | `Nghiên cứu đối thủ Sapo, KiotViet, CukCuk về tính năng kiểm kê kho, để quyết định EasyPOS nên làm những gì` |
 | **Đầu vào** | Tên đối thủ + **quyết định cần đưa ra** (bắt buộc) |
-| **Đầu ra** | `docs/research/competitive-<chủ-đề>-<ngày>/research.md` |
+| **Đầu ra** | `docs/<nghiệp-vụ>/research/competitive-<chủ-đề>/research.md` |
 
 > ⚠️ Skill đã được cấu hình **không nghiên cứu giá và các gói phần mềm**, chỉ tập trung vào tính năng, định vị và phản hồi của người dùng.
 
@@ -150,9 +152,9 @@ Có 2 cách, cả hai đều được:
 
 | | |
 |---|---|
-| **Câu gọi mẫu** | `Viết giải pháp sơ bộ cho nghiệp vụ kiểm kê kho. Đầu vào: docs/brainstorming/.../brainstorm-intent.md và docs/research/.../research.md` |
+| **Câu gọi mẫu** | `Viết giải pháp sơ bộ cho nghiệp vụ kiểm kê kho. Đầu vào: docs/kiem-ke-kho/brainstorming/brainstorm-intent.md và docs/kiem-ke-kho/research/.../research.md` |
 | **Đầu vào** | Yêu cầu KH + `brainstorm-intent.md` + `research.md` (có file nào đưa file đó) |
-| **Đầu ra** | `docs/briefs/brief-<nghiệp-vụ>-<ngày>/brief.md` (+ `addendum.md`) |
+| **Đầu ra** | `docs/<nghiệp-vụ>/brief/brief.md` (+ `addendum.md`) |
 
 **Skill cho chọn 1 trong 2 cách:**
 
@@ -178,7 +180,6 @@ Có 2 cách, cả hai đều được:
 **Quy ước:**
 - Brief dài **1–2 trang**. Phần chi tiết hơn được đưa sang `addendum.md`.
 - Tìm và sửa hết các nhãn `[ASSUMPTION]` trước khi họp.
-- Cuối phiên, skill **hỏi bạn có muốn đẩy lên Confluence không** (xem mục 6).
 
 **Chế độ khác của skill:**
 - `Cập nhật brief kiểm kê kho: <thay đổi>`: sửa brief sau buổi họp chốt ở Bước 2.
@@ -188,9 +189,9 @@ Có 2 cách, cả hai đều được:
 
 | | |
 |---|---|
-| **Câu gọi mẫu** | `Đánh giá ảnh hưởng của docs/briefs/brief-kiem-ke-kho-.../brief.md` |
+| **Câu gọi mẫu** | `Đánh giá ảnh hưởng của docs/kiem-ke-kho/brief/brief.md` |
 | **Đầu vào** | `brief.md` |
-| **Đầu ra** | `docs/impact/impact-<nghiệp-vụ>-<ngày>/impact.md` |
+| **Đầu ra** | `docs/<nghiệp-vụ>/impact/impact.md` |
 
 **Skill sẽ làm gì:**
 
@@ -200,7 +201,6 @@ Có 2 cách, cả hai đều được:
  ③ Tìm các chức năng/màn hình/dữ liệu bị ảnh hưởng
  ④ Lập ma trận tác động + sơ đồ phụ thuộc
  ⑤ Chỉ ra MÂU THUẪN: giữa brief và Confluence, và giữa các trang Confluence với nhau
- ⑥ Hỏi có đẩy lên Confluence không
 ```
 
 > 💡 Nếu `impact.md` có **tác động mức cao** hoặc **mâu thuẫn**, quay lại 1.3 để cập nhật brief **trước** khi họp chốt. Làm vậy thì không phải vẽ lại wireframe ở Bước 3.
@@ -243,10 +243,10 @@ Có 2 cách, cả hai đều được:
 
 | | |
 |---|---|
-| **Câu gọi mẫu** | `/ux Vẽ luồng và wireframe trắng đen cho nghiệp vụ kiểm kê kho từ docs/briefs/.../brief.md. Chỉ cần luồng và bố cục, chưa cần màu sắc` |
+| **Câu gọi mẫu** | `/ux Vẽ luồng và wireframe trắng đen cho nghiệp vụ kiểm kê kho từ docs/kiem-ke-kho/brief/brief.md. Chỉ cần luồng và bố cục, chưa cần màu sắc` |
 | **Đầu vào** | `brief.md` (+ `impact.md`) |
 | **Lưu ý** | Nên gõ `/ux` ở đầu câu. Skill này chưa nhận câu nói tự nhiên bằng tiếng Việt |
-| **Đầu ra** | `docs/ux-designs/ux-<nghiệp-vụ>-<ngày>/EXPERIENCE.md` (luồng, trạng thái, hành vi) và `wireframes/*.excalidraw` |
+| **Đầu ra** | `docs/<nghiệp-vụ>/ux/EXPERIENCE.md` (luồng, trạng thái, hành vi) và `wireframes/*.excalidraw` |
 
 **Wireframe cần trả lời được 4 câu hỏi:**
 
@@ -273,9 +273,9 @@ Có 2 cách, cả hai đều được:
 
 | | |
 |---|---|
-| **Câu gọi mẫu** | `Chuyển wireframe docs/ux-designs/.../wireframes/phieu-kiem-ke.excalidraw sang Figma: <link file Figma>` |
+| **Câu gọi mẫu** | `Chuyển wireframe docs/kiem-ke-kho/ux/wireframes/phieu-kiem-ke.excalidraw sang Figma: <link file Figma>` |
 | **Đầu vào** | File `.excalidraw` **đã chốt** + link Figma |
-| **Đầu ra** | Frame màu trên Figma + `docs/ux-designs/.../figma/figma-log.md` |
+| **Đầu ra** | Frame màu trên Figma + `docs/<nghiệp-vụ>/ux/figma/figma-log.md` |
 
 **Skill sẽ làm gì:**
 - **Giữ đúng bố cục và nội dung của wireframe.** Skill không tự thêm hay bớt trường, nút hoặc bước.
@@ -316,8 +316,8 @@ Có 2 cách, cả hai đều được:
 | | |
 |---|---|
 | **Câu gọi mẫu** | `Viết SRS cho nghiệp vụ kiểm kê kho` |
-| **Đầu vào** | Skill **tự tìm** `brief.md`, `impact.md` và file `.excalidraw` của nghiệp vụ trong `docs/` |
-| **Đầu ra** | `docs/srs/.../srs.md` |
+| **Đầu vào** | Skill **tự tìm** `brief.md`, `impact.md`, file `.excalidraw` và `figma-log.md` trong `docs/<nghiệp-vụ>/` |
+| **Đầu ra** | `docs/<nghiệp-vụ>/srs/srs.md` |
 
 **Skill sẽ làm gì:**
 
@@ -333,72 +333,60 @@ Có 2 cách, cả hai đều được:
       → Chi tiết chức năng (màn hình, luồng sự kiện, lỗi, business rule)
       → Luồng ảnh hưởng
  ④ Chỗ tự suy luận gắn [ASSUMPTION]
- ⑤ Hỏi có đẩy lên Confluence không
 ```
 
 **Các chế độ khác:**
 - `Cập nhật SRS kiểm kê kho: <thay đổi>`. Nguồn có thể là file hoặc trang Confluence, skill tự tải trang về trước khi sửa.
 - `Kiểm tra SRS kiểm kê kho`: tự kiểm tra trước khi bàn giao ở Bước 6.
 
-> 💡 Sơ đồ luồng trong SRS được viết bằng `mermaid`. **Confluence không tự vẽ mermaid**, nên khi đẩy lên cần chèn ảnh xuất từ Excalidraw hoặc mermaid.
+> 💡 Sơ đồ luồng trong SRS được viết bằng `mermaid`.
 
 ### ✅ Checklist hoàn thành Bước 5
 
 - [ ] Đã chạy `srs` ở chế độ Validate và sửa hết các lỗi
 - [ ] Không còn `[ASSUMPTION]`
 - [ ] Mỗi màn trong SRS khớp với màn Figma đã chốt ở Bước 4
-- [ ] Đã đẩy lên Confluence và gửi link cho dev/QC trước buổi đào tạo
+- [ ] Đã gửi SRS cho dev/QC trước buổi đào tạo
 
 ---
 
-## 6. Đẩy tài liệu lên Confluence
+## 6. Confluence (chỉ đọc)
 
-Skill **luôn hỏi trước** khi đẩy, không bao giờ tự đẩy.
+Skill **không đẩy tài liệu lên Confluence**. Mọi tài liệu chỉ lưu dạng file Markdown trong `docs/`.
 
-| Tài liệu | Đẩy lên? |
-|---|---|
-| `brief.md` + `addendum.md` | ✅ Hỏi rồi đẩy |
-| `impact.md` | ✅ Hỏi rồi đẩy |
-| `srs.md` | ✅ Hỏi rồi đẩy |
-| `brainstorm-intent.md`, `research.md` | ❌ Mặc định không đẩy, vì kết quả đã nằm trong brief |
+Skill chỉ **đọc** Confluence (space EP) khi cần:
+- `impact-analysis` quét các trang có sẵn để tìm chức năng, dữ liệu bị ảnh hưởng.
+- `srs` kiểm tra nghiệp vụ đã có SRS trên Confluence chưa, hoặc tải một trang có sẵn về để cập nhật.
 
-**Cây trang trên Confluence** (space EP):
-
-```
- Tài liệu nghiệp vụ
- └── Kiểm kê kho — Giải pháp sơ bộ         ← brief (trang gốc của nghiệp vụ)
-     ├── Kiểm kê kho — Addendum
-     ├── Kiểm kê kho — Đánh giá ảnh hưởng
-     └── Kiểm kê kho — SRS
-```
-
-- **Tiêu đề trang luôn bắt đầu bằng tên nghiệp vụ.** Nếu trang cùng tên đã có, script **cập nhật** trang đó (tăng version) chứ không tạo trang trùng.
-- **Lần đầu dùng cần có Personal Access Token của Confluence.** Đặt vào biến môi trường `CONFLUENCE_PAT` hoặc file `~/.confluence-pat`. **Không bao giờ dán token vào chat.**
+Để đọc được, cần có Personal Access Token của Confluence, đặt vào biến môi trường `CONFLUENCE_PAT` hoặc file `~/.confluence-pat`. **Không bao giờ dán token vào chat.**
 
 ---
 
 ## 7. Sơ đồ thư mục tài liệu
 
-Tất cả tài liệu của một nghiệp vụ nằm trong `docs/`, mỗi skill có một thư mục riêng:
+Mỗi nghiệp vụ có **một thư mục riêng** trong `docs/`, đặt theo tên nghiệp vụ không dấu (vd `kiem-ke-kho`). Mọi tài liệu của nghiệp vụ đó nằm chung bên trong, mỗi skill một thư mục con:
 
 ```
  docs/
- ├── brainstorming/brainstorm-kiem-ke-kho-<ngày>/
- │   └── brainstorm-intent.md             ← 1.1
- ├── research/competitive-kiem-ke-kho-<ngày>/
- │   └── research.md                      ← 1.2
- ├── briefs/brief-kiem-ke-kho-<ngày>/
- │   ├── brief.md                         ← 1.3  ⭐
- │   └── addendum.md
- ├── impact/impact-kiem-ke-kho-<ngày>/
- │   └── impact.md                        ← 1.4  ⭐
- ├── ux-designs/ux-kiem-ke-kho-<ngày>/
- │   ├── EXPERIENCE.md                    ← 3a
- │   ├── wireframes/*.excalidraw          ← 3a  ⭐
- │   └── figma/figma-log.md               ← 3b
- └── srs/.../
-     └── srs.md                           ← 5   ⭐
+ └── kiem-ke-kho/                          ← tên nghiệp vụ
+     ├── brainstorming/
+     │   └── brainstorm-intent.md          ← 1.1
+     ├── research/competitive-<chủ-đề>/
+     │   └── research.md                   ← 1.2
+     ├── brief/
+     │   ├── brief.md                      ← 1.3  ⭐
+     │   └── addendum.md
+     ├── impact/
+     │   └── impact.md                     ← 1.4  ⭐
+     ├── ux/
+     │   ├── EXPERIENCE.md                 ← 3a
+     │   ├── wireframes/*.excalidraw       ← 3a  ⭐
+     │   └── figma/figma-log.md            ← 3b
+     └── srs/
+         └── srs.md                        ← 5   ⭐
 ```
+
+Lần đầu làm một nghiệp vụ, skill sẽ đề xuất tên thư mục và hỏi bạn xác nhận. Các skill sau tự tìm đúng thư mục đó.
 
 > Các file `.memlog.md` là nhật ký làm việc của skill. **Không cần đọc và không được xóa**, vì skill dùng chúng để làm tiếp phiên dang dở.
 
@@ -437,4 +425,4 @@ Cứ dừng. Lần sau gọi lại đúng skill đó, nó sẽ đề nghị làm
 Cập nhật brief trước (`Cập nhật brief …`), chạy lại impact-analysis, rồi mới sửa wireframe. **Không sửa thẳng Figma hay SRS mà bỏ qua brief**, nếu không tài liệu sẽ lệch nhau.
 
 **Skill có xuất file HTML không?**
-Không. Mọi tài liệu chỉ ở dạng Markdown (`.md`). Khi đẩy lên Confluence, script tự chuyển sang định dạng của Confluence.
+Không. Mọi tài liệu chỉ ở dạng Markdown (`.md`) và không được đẩy lên Confluence.

@@ -30,14 +30,15 @@ srs_template = "assets/srs-template.md"
 validation_checklist = "assets/srs-checklist.md"
 
 # Run folder. srs.md lands in `{srs_output_path}/{run_folder_pattern}/`.
-srs_output_path = "docs/srs"
-run_folder_pattern = "srs-{feature}-{date}"
+srs_output_path = "docs"
+run_folder_pattern = "{feature}/srs"
 
 # Where upstream inputs usually live (scanned during Discovery).
 input_globs = [
-  "docs/briefs/**/brief.md",
-  "docs/impact/**/impact.md",
-  "docs/ux-designs/**/wireframes/*.excalidraw",
+  "docs/{feature}/brief/brief.md",
+  "docs/{feature}/impact/impact.md",
+  "docs/{feature}/ux/**/*.excalidraw",
+  "docs/{feature}/ux/figma/figma-log.md",
 ]
 
 # Document standards applied at Finalize, in order.
@@ -49,10 +50,8 @@ doc_standards = [
 
 # Internal tools consulted on demand.
 external_sources = [
-  "Khi cần biết nghiệp vụ đã có tài liệu chưa, hoặc chức năng liên quan mô tả thế nào: dùng `python tools/confluence_scan.py search|fetch` (chỉ đọc) trên space EP.",
+  "Khi cần biết nghiệp vụ đã có tài liệu chưa, hoặc chức năng liên quan mô tả thế nào: dùng `uv run tools/confluence_scan.py search|fetch` (chỉ đọc) trên space EP.",
 ]
 
-# Routing beyond local files at Finalize. Fires automatically unless the user opts out.
-external_handoffs = [
-  "Hỏi người dùng có muốn đẩy SRS lên Confluence không — không tự đẩy. Nếu SRS đang cập nhật một trang có sẵn (confluence_page_id), cảnh báo rằng đẩy sẽ GHI ĐÈ nội dung trang (bản cũ còn trong Page History) và xin xác nhận riêng. Đồng ý → `python tools/push_confluence.py {doc_workspace}/srs.md` (kèm `--title` đúng tiêu đề trang hiện có, hoặc `--parent-id` khi tạo mới), báo lại URL và ghi page id vào frontmatter.",
-]
+# Routing beyond local files at Finalize. Không đẩy tài liệu lên Confluence — SRS chỉ lưu dạng file.
+external_handoffs = []

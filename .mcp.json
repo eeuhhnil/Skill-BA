@@ -4,6 +4,17 @@
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "figma-ui-mcp"]
+    },
+    "confluence": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-atlassian"],
+      "env": {
+        "CONFLUENCE_URL": "https://confluence-sds.softdreams.vn:8090",
+        "CONFLUENCE_PERSONAL_TOKEN": "${CONFLUENCE_PAT}",
+        "CONFLUENCE_SPACES_FILTER": "EP",
+        "READ_ONLY_MODE": "true"
+      }
     }
   }
 }

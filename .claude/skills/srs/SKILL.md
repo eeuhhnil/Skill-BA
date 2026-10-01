@@ -16,14 +16,14 @@ Không tự nghĩ nghiệp vụ thay người dùng. Mọi chi tiết phải l�
 - `{doc_workspace}` = thư mục run đang làm.
 - **Vai trò file.**
   - `srs.md` — tài liệu chính, theo `{workflow.srs_template}`.
-  - `.memlog.md` — bộ nhớ và nhật ký của run: mỗi quyết định, thay đổi, giả định là **một dòng append-only** ngay khi phát sinh. Ghi qua `uv run {project-root}/_bmad/scripts/memlog.py append --workspace {doc_workspace} --type <decision|change|override|assumption|event> --text "<ý chính, kèm lý do>"`; nếu script không có, append thẳng dòng `- {date} | <type> | <text>`. Cái gì không ghi thì mất khi resume.
+  - `.memlog.md` — bộ nhớ và nhật ký của run: mỗi quyết định, thay đổi, giả định là **một dòng append-only** ngay khi phát sinh. Ghi qua `uv run {project-root}/.claude/skills/help/scripts/memlog.py append --workspace {doc_workspace} --type <decision|change|override|assumption|event> --text "<ý chính, kèm lý do>"`; nếu script không có, append thẳng dòng `- {date} | <type> | <text>`. Cái gì không ghi thì mất khi resume.
   - `open-questions.md` — câu hỏi cần PO/dev/BA khác trả lời, kèm người chịu trách nhiệm. Không nhồi câu hỏi mở vào thân SRS.
 
 ## On Activation
 
-1. Resolve customization: `uv run {project-root}/_bmad/scripts/resolve_customization.py --skill {skill-root} --project-root {project-root} --key workflow`. Lỗi thì đọc thẳng `{skill-root}/customize.toml` và `{project-root}/_bmad/custom/srs*.toml` nếu có.
+1. Resolve customization: `uv run {project-root}/.claude/skills/help/scripts/resolve_customization.py --skill {skill-root} --project-root {project-root} --key workflow`. Lỗi thì đọc thẳng `{skill-root}/customize.toml` và `{project-root}/_bmad/custom/srs*.toml` nếu có.
 2. Chạy `{workflow.activation_steps_prepend}`. Coi `{workflow.persistent_facts}` là bối cảnh nền (mục `file:` thì nạp nội dung). `{workflow.external_sources}` là công cụ nội bộ dùng khi cần.
-3. `{date}` = ngày hệ thống.
+3. `{date}` = ngày hệ thống. `{feature}` = slug tên nghiệp vụ (không dấu, chữ thường, nối bằng `-`, vd `quan-ly-ca-ket-ca`). Lấy từ chủ đề hoặc tài liệu đầu vào; nếu `docs/` đã có thư mục của nghiệp vụ này thì dùng lại đúng tên đó; tạo mới thì xác nhận tên với người dùng một lần (headless: không hỏi, tự đặt tên và ghi vào danh sách assumptions). Mọi tài liệu của một nghiệp vụ nằm chung trong `docs/{feature}/`.
 4. Headless → theo mục `## Headless`. Không thì chào người dùng. Nếu yêu cầu thực ra là việc khác (ý tưởng thô → `brainstorming`; một trang giải pháp → `product-brief`; xem đụng vào đâu → `impact-analysis`), gợi ý trước khi tiếp tục.
 5. Xác định ý định: **Create** (chưa có SRS), **Update** (đã có SRS — file hoặc trang Confluence), **Validate** (chỉ chấm). Mơ hồ thì hỏi. Với Create: quét `{workflow.srs_output_path}` tìm run dở (`status` khác `final`) và đề nghị làm tiếp.
 
@@ -74,7 +74,7 @@ Giữ đúng template công ty; các quy tắc dưới đây là cách viết t�
 
 **Truy vết là xương sống.** Mỗi US có FR phục vụ; **mỗi FR ở mục 3 có đúng một mục 4.x**; mỗi BR được tham chiếu ít nhất một lần. Kiểm tra lại mỗi khi thêm/bớt.
 
-**1.4 Tổng quan luồng.** Flowchart/BPMN mức nghiệp vụ, không field/button. Trong markdown dùng khối ```mermaid```; nhắc người dùng Confluence không tự vẽ mermaid — khi đẩy lên cần chèn ảnh (xuất từ Excalidraw/mermaid) hoặc macro tương ứng.
+**1.4 Tổng quan luồng.** Flowchart/BPMN mức nghiệp vụ, không field/button. Trong markdown dùng khối ```mermaid```.
 
 **4.x.1 Bảng UI.** Mỗi trường nhập liệu phải có: **max length · format · kiểu dữ liệu · ký tự cho phép**; dropdown có nguồn dữ liệu và giá trị mặc định. Tên trường lấy đúng như trên Figma.
 
@@ -102,7 +102,7 @@ Nói trước trình tự trong một câu rồi đi lần lượt.
 3. **Reviewer Gate.** Sửa trước khi polish.
 4. **Câu hỏi mở và `[ASSUMPTION]`.** Cái nào chặn dev (làm dev hiểu sai) → xử lý từng cái với người dùng; cái không chặn → giữ trong `open-questions.md` kèm người chịu trách nhiệm.
 5. **Polish.** Áp `{workflow.doc_standards}` theo thứ tự.
-6. **External handoffs.** Chạy `{workflow.external_handoffs}` (mặc định: hỏi có đẩy lên Confluence không). Báo URL trả về.
+6. **External handoffs.** Chạy `{workflow.external_handoffs}` nếu có (mặc định: không có — không đẩy lên Confluence).
 7. **Đóng.** `status: final`, cập nhật `updated`, `version` +1 nếu là Update; ghi memlog `event | SRS finalized`. Gợi ý bước tiếp: tách stories bằng công cụ quản lý ticket riêng của team (ngoài phạm vi bộ skill này).
 8. Chạy `{workflow.on_complete}` nếu có.
 
@@ -111,8 +111,8 @@ Nói trước trình tự trong một câu rồi đi lần lượt.
 Không hỏi. Dùng đầu vào được truyền và những gì tìm thấy trong `{workflow.input_globs}`; suy luận thì gắn `[ASSUMPTION]`; không đẩy Confluence. Nếu Create mà Confluence đã có SRS cùng nghiệp vụ, hoặc ý định vẫn mơ hồ → dừng với `blocked`. Kết thúc bằng JSON:
 
 ```json
-{"status": "complete", "intent": "create", "srs": "docs/srs/.../srs.md",
- "memlog": "docs/srs/.../.memlog.md", "open_questions": "docs/srs/.../open-questions.md",
+{"status": "complete", "intent": "create", "srs": "docs/<nghiệp-vụ>/srs/srs.md",
+ "memlog": "docs/<nghiệp-vụ>/srs/.memlog.md", "open_questions": "docs/<nghiệp-vụ>/srs/open-questions.md",
  "fr_count": 0, "assumptions": 0, "existing_confluence_page": null, "confluence": "skipped"}
 ```
 
