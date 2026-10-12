@@ -22,7 +22,7 @@ Nguyên tắc:
 ## Quy trình
 
 ### 1. Nắm thay đổi
-Đọc tài liệu đầu vào. Nếu người dùng chưa chỉ file, tìm trong `docs/{feature}/brief/` và hỏi lại cho chắc. `{feature}` = slug tên nghiệp vụ (không dấu, chữ thường, nối bằng `-`, vd `quan-ly-ca-ket-ca`). Lấy từ chủ đề hoặc tài liệu đầu vào; nếu `docs/` đã có thư mục của nghiệp vụ này thì dùng lại đúng tên đó; tạo mới thì xác nhận tên với người dùng một lần (headless: không hỏi, tự đặt tên và ghi vào danh sách assumptions). Mọi tài liệu của một nghiệp vụ nằm chung trong `docs/{feature}/`. Tóm lại trong 3–5 dòng: thay đổi là gì, **đọc dữ liệu gì, ghi ra dữ liệu gì** (bước 1 của search-method). Xác nhận space Confluence cần quét (mặc định `EP`) và nhánh cần loại (mặc định: TestCase, Nâng cấp, Thay đổi giao diện).
+Đọc tài liệu đầu vào. Nếu người dùng chưa chỉ file, tìm trong `docs/{feature}/brief/` và hỏi lại cho chắc. `{feature}` = slug tên nghiệp vụ (không dấu, chữ thường, nối bằng `-`, vd `quan-ly-ca-ket-ca`). Lấy từ chủ đề hoặc tài liệu đầu vào; nếu `docs/` đã có thư mục của nghiệp vụ này thì dùng lại đúng tên đó; tạo mới thì xác nhận tên với người dùng một lần (headless: không hỏi, tự đặt tên và ghi vào danh sách assumptions). Mọi tài liệu của một nghiệp vụ nằm chung trong `docs/{feature}/`. Tóm lại trong 3–5 dòng: thay đổi là gì, **đọc dữ liệu gì, ghi ra dữ liệu gì** (bước 1 của search-method). Xác nhận space Confluence cần quét (mặc định là giá trị biến môi trường `CONFLUENCE_SPACE`, không có thì `EP`) và nhánh cần loại (mặc định: TestCase, Nâng cấp, Thay đổi giao diện).
 
 ### 2. Lập danh sách từ khóa — cho người dùng duyệt
 Nhóm theo các bước 2–6 của search-method, mỗi nhóm kèm đồng nghĩa. Trình bày gọn, hỏi người dùng thêm/bớt. Người dùng thường biết tên gọi nội bộ mà tài liệu đầu vào không có.

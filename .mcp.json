@@ -12,7 +12,7 @@
       "env": {
         "CONFLUENCE_URL": "https://confluence-sds.softdreams.vn:8090",
         "CONFLUENCE_PERSONAL_TOKEN": "${CONFLUENCE_PAT}",
-        "CONFLUENCE_SPACES_FILTER": "EP",
+        "CONFLUENCE_SPACES_FILTER": "${CONFLUENCE_SPACE:-EP}",
         "READ_ONLY_MODE": "true"
       }
     }

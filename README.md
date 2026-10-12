@@ -197,7 +197,7 @@ Có 2 cách, cả hai đều được:
 
 ```
  ① Tóm tắt thay đổi: đọc dữ liệu gì, ghi ra dữ liệu gì
- ② Quét Confluence space EP (chỉ đọc, không sửa trang nào)
+ ② Quét Confluence space của nhóm (chỉ đọc, không sửa trang nào)
  ③ Tìm các chức năng/màn hình/dữ liệu bị ảnh hưởng
  ④ Lập ma trận tác động + sơ đồ phụ thuộc
  ⑤ Chỉ ra MÂU THUẪN: giữa brief và Confluence, và giữa các trang Confluence với nhau
@@ -354,7 +354,7 @@ Có 2 cách, cả hai đều được:
 
 Skill **không đẩy tài liệu lên Confluence**. Mọi tài liệu chỉ lưu dạng file Markdown trong `docs/`.
 
-Skill chỉ **đọc** Confluence (space EP) khi cần:
+Skill chỉ **đọc** Confluence (space của nhóm, khai báo ở Bước 6.3 của `HUONG-DAN-CAI-DAT.md`) khi cần:
 - `impact-analysis` quét các trang có sẵn để tìm chức năng, dữ liệu bị ảnh hưởng.
 - `srs` kiểm tra nghiệp vụ đã có SRS trên Confluence chưa, hoặc tải một trang có sẵn về để cập nhật.
 

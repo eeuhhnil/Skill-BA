@@ -11,7 +11,7 @@ status: draft
 created: {YYYY-MM-DD}
 updated: {YYYY-MM-DD}
 source_doc: "{đường dẫn brief/spec làm đầu vào}"
-confluence_space: {EP}
+confluence_space: {space key đã quét, vd EP}
 scan: "{N} trang khớp / {M} trang đã đọc; từ khóa: …"
 ---
 

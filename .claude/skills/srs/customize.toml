@@ -19,7 +19,7 @@ activation_steps_append = []
 persistent_facts = [
   "Công ty là công ty product (EasyPos) — không có BRD; SRS là tài liệu chính giao cho dev và QA.",
   "Quy trình BA: kiểm tra tài liệu đã có → brainstorming → research → giải pháp sơ bộ → đánh giá ảnh hưởng → họp chốt → wireframe trắng đen → wireframe màu (Figma) → SRS → stories.",
-  "SRS chính thức nằm trên Confluence space EP, mục 'Tài liệu nghiệp vụ'. Nhiều nghiệp vụ đã có SRS sẵn — luôn kiểm tra trước khi viết mới.",
+  "SRS chính thức nằm trên Confluence space của nhóm (biến môi trường CONFLUENCE_SPACE, mặc định EP), mục 'Tài liệu nghiệp vụ'. Nhiều nghiệp vụ đã có SRS sẵn — luôn kiểm tra trước khi viết mới.",
 ]
 
 # Executed when the workflow completes. String or array.
@@ -50,7 +50,7 @@ doc_standards = [
 
 # Internal tools consulted on demand.
 external_sources = [
-  "Khi cần biết nghiệp vụ đã có tài liệu chưa, hoặc chức năng liên quan mô tả thế nào: dùng `uv run tools/confluence_scan.py search|fetch` (chỉ đọc) trên space EP.",
+  "Khi cần biết nghiệp vụ đã có tài liệu chưa, hoặc chức năng liên quan mô tả thế nào: dùng `uv run tools/confluence_scan.py search|fetch` (chỉ đọc); script tự dùng space của nhóm từ CONFLUENCE_SPACE.",
 ]
 
 # Routing beyond local files at Finalize. Không đẩy tài liệu lên Confluence — SRS chỉ lưu dạng file.

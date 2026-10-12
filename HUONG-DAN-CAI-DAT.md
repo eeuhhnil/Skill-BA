@@ -147,32 +147,46 @@ Hiện ra 4 ký tự là đã lưu được.
 
 > ⚠️ **Không** dán token vào chat với Claude, **không** ghi token vào file nào trong thư mục `Skill-BA`. Các file đó có thể bị đẩy lên GitHub và lộ token.
 
----
 ### 6.3. Khai báo space Confluence của nhóm bạn
 
-Bộ skill đang để mặc định space **EP** (space của nhóm EasyPOS). Nếu bạn ở nhóm khác, đổi sang space của nhóm mình để skill đọc đúng tài liệu.
+Skill chỉ đọc tài liệu trong **space** Confluence mà bạn khai báo. Nếu không khai báo, skill dùng space **EP** (nhóm EasyPOS). **Nhóm EasyPOS bỏ qua mục này.** Nhóm khác làm 2 việc sau.
 
-**Tìm key space của nhóm:** mở một trang bất kỳ trong space của nhóm trên Confluence và nhìn đường dẫn. Key là phần nằm ngay sau `/spaces/`:
+**1. Tìm key space của nhóm.** Mở một trang bất kỳ trong space của nhóm trên Confluence, nhìn thanh địa chỉ:
 
-```
-https://....../spaces/EP/pages/..../EasyPos
-                                                 ^^
-                                                 key = EP
-```
+| Đường dẫn có dạng | Key space |
+|---|---|
+| `.../spaces/ET/pages/12345/Ten-trang` | phần ngay sau `/spaces/` → `ET` |
 
-Đường dẫn dạng cũ thì key nằm sau `/display/` (`.../display/EP/...`) hoặc sau `spaceKey=` (`...spaceKey=EP`).
+Không thấy key trên đường dẫn: vào trang chủ của space → góc dưới bên trái bấm **Space tools → Overview**, key nằm ở dòng **Key**.
 
-**Sửa key ở 1 chỗ** trong thư mục `Skill-BA` (mở bằng VS Code hoặc Notepad/TextEdit). Thay `EP` bằng key của nhóm bạn, **viết hoa đúng như trên đường dẫn**:
+**2. Lưu key vào máy** (giống cách lưu token ở 6.2). Thay `ET` bằng key của nhóm bạn, **viết hoa đúng như trên Confluence**:
 
-| File | Dòng cần sửa | Ví dụ nhóm có key `ET` |
-|---|---|---|
-| `.mcp.json` | `"CONFLUENCE_SPACES_FILTER": "EP",` | `"CONFLUENCE_SPACES_FILTER": "ET",` |
+- **macOS:**
+  ```
+  echo 'export CONFLUENCE_SPACE="ET"' >> ~/.zshrc
+  ```
+- **Windows:**
+  ```
+  setx CONFLUENCE_SPACE "ET"
+  ```
 
-Nhóm cần đọc nhiều space cùng lúc thì ở `.mcp.json` ghi các key cách nhau bằng dấu phẩy, **viết liền, không có dấu cách**, ví dụ `"ET,EP"`. Hai file còn lại chỉ ghi space chính của nhóm.
+Nhóm cần đọc nhiều space cùng lúc thì ghi các key cách nhau bằng dấu phẩy, **viết liền, không có dấu cách**, ví dụ `"ET,EP"`.
+
+**Đóng cửa sổ gõ lệnh, mở lại**, rồi kiểm tra:
+- **macOS:** `echo $CONFLUENCE_SPACE`
+- **Windows:** `$env:CONFLUENCE_SPACE`
+
+Hiện ra đúng key là đã lưu được.
+
+> 💡 **Không sửa file nào** trong thư mục `Skill-BA` để đổi space. Key lưu trong máy nên khi cập nhật bộ skill (`git pull` hoặc tải ZIP mới) bạn không phải khai báo lại.
+
+**Muốn đổi space sau này:** chạy lại lệnh ở trên với key mới (macOS: mở `~/.zshrc` bằng `open -e ~/.zshrc`, sửa dòng `export CONFLUENCE_SPACE=...`), rồi thoát hẳn VS Code và mở lại.
+
+---
 
 ## Bước 7. Mở bộ skill trong VS Code và kiểm tra kết nối
 
-1. **Thoát hẳn VS Code** để nó nhận token vừa lưu: macOS nhấn `Cmd + Q`; Windows đóng tất cả cửa sổ VS Code.
+1. **Thoát hẳn VS Code** để nó nhận token (và space) vừa lưu: macOS nhấn `Cmd + Q`; Windows đóng tất cả cửa sổ VS Code.
 2. Mở lại VS Code → **File → Open Folder…** → chọn đúng thư mục **`Skill-BA`**.
    Phải mở **đúng thư mục gốc**, tức thư mục chứa `README.md`, không mở thư mục con bên trong.
 3. Nếu VS Code hỏi **Do you trust the authors of the files in this folder?**, chọn **Yes, I trust the authors**.
@@ -223,7 +237,7 @@ Claude giới thiệu các skill và gợi ý bước tiếp theo là bạn đã
 Sau khi cập nhật, thoát hẳn VS Code rồi mở lại.
 
 ---
-ß
+
 **Cần đổi token Confluence:**
 - macOS: chạy `open -e ~/.zshrc`, sửa dòng `export CONFLUENCE_PAT=...`, lưu lại.
 - Windows: chạy lại lệnh `setx` ở Bước 6.2 với token mới.

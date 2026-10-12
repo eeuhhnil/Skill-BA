@@ -5,6 +5,8 @@
 
 Token: Personal Access Token của Confluence, đọc từ biến môi trường CONFLUENCE_PAT
 hoặc từ file ~/.confluence-pat (một dòng, chỉ chứa token).
+Space: đọc từ biến môi trường CONFLUENCE_SPACE (nhiều space cách nhau bằng dấu phẩy),
+mặc định EP; ghi đè bằng --space.
 
 Hai lệnh con:
   search  Tìm theo từ khóa trong một space, gộp và xếp hạng trang theo số từ khóa khớp.
@@ -26,7 +28,7 @@ from pathlib import Path
 import requests
 
 BASE_URL = "https://confluence-sds.softdreams.vn:8090"
-SPACE_KEY = "EP"
+SPACE_KEY = os.environ.get("CONFLUENCE_SPACE") or "EP"
 
 
 def load_token():
@@ -48,11 +50,12 @@ def session():
 
 def search(s, keywords, space, skip, out):
     pages = {}
+    spaces = ",".join(f'"{k.strip()}"' for k in space.split(",") if k.strip())
     for kw in keywords:
         start = 0
         while True:
             r = s.get(f"{BASE_URL}/rest/api/content/search", timeout=60, params={
-                "cql": f'space={space} and type=page and text ~ "\\"{kw}\\""',
+                "cql": f'space in ({spaces}) and type=page and text ~ "\\"{kw}\\""',
                 "limit": 100, "start": start, "expand": "ancestors"})
             r.raise_for_status()
             results = r.json().get("results", [])
