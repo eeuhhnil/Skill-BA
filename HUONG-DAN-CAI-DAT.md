@@ -148,6 +148,27 @@ Hiện ra 4 ký tự là đã lưu được.
 > ⚠️ **Không** dán token vào chat với Claude, **không** ghi token vào file nào trong thư mục `Skill-BA`. Các file đó có thể bị đẩy lên GitHub và lộ token.
 
 ---
+### 6.3. Khai báo space Confluence của nhóm bạn
+
+Bộ skill đang để mặc định space **EP** (space của nhóm EasyPOS). Nếu bạn ở nhóm khác, đổi sang space của nhóm mình để skill đọc đúng tài liệu.
+
+**Tìm key space của nhóm:** mở một trang bất kỳ trong space của nhóm trên Confluence và nhìn đường dẫn. Key là phần nằm ngay sau `/spaces/`:
+
+```
+https://confluence-sds.softdreams.vn:8090/spaces/EP/pages/50697850/EasyPos
+                                                 ^^
+                                                 key = EP
+```
+
+Đường dẫn dạng cũ thì key nằm sau `/display/` (`.../display/EP/...`) hoặc sau `spaceKey=` (`...spaceKey=EP`).
+
+**Sửa key ở 3 chỗ** trong thư mục `Skill-BA` (mở bằng VS Code hoặc Notepad/TextEdit). Thay `EP` bằng key của nhóm bạn, **viết hoa đúng như trên đường dẫn**:
+
+| File | Dòng cần sửa | Ví dụ nhóm có key `ET` |
+|---|---|---|
+| `.mcp.json` | `"CONFLUENCE_SPACES_FILTER": "EP",` | `"CONFLUENCE_SPACES_FILTER": "ET",` |
+
+Nhóm cần đọc nhiều space cùng lúc thì ở `.mcp.json` ghi các key cách nhau bằng dấu phẩy, **viết liền, không có dấu cách**, ví dụ `"ET,EP"`. Hai file còn lại chỉ ghi space chính của nhóm.
 
 ## Bước 7. Mở bộ skill trong VS Code và kiểm tra kết nối
 
