@@ -124,6 +124,7 @@ Skill cần token để **đọc** tài liệu trên Confluence. Skill không ba
 3. Ở menu bên trái, chọn **Personal Access Tokens** → **Create token**.
 4. Đặt tên, ví dụ `claude-code`, rồi bấm **Create**.
 5. **Copy token ngay.** Confluence chỉ hiện token một lần, đóng cửa sổ là không xem lại được.
+<img width="720" height="401" alt="image" src="https://github.com/user-attachments/assets/de09a4ac-7562-4c16-b962-6840ffa4eb9f" />
 
 ### 6.2. Lưu token vào máy
 
