@@ -162,7 +162,7 @@ https://....../spaces/EP/pages/..../EasyPos
 
 Đường dẫn dạng cũ thì key nằm sau `/display/` (`.../display/EP/...`) hoặc sau `spaceKey=` (`...spaceKey=EP`).
 
-**Sửa key ở 3 chỗ** trong thư mục `Skill-BA` (mở bằng VS Code hoặc Notepad/TextEdit). Thay `EP` bằng key của nhóm bạn, **viết hoa đúng như trên đường dẫn**:
+**Sửa key ở 1 chỗ** trong thư mục `Skill-BA` (mở bằng VS Code hoặc Notepad/TextEdit). Thay `EP` bằng key của nhóm bạn, **viết hoa đúng như trên đường dẫn**:
 
 | File | Dòng cần sửa | Ví dụ nhóm có key `ET` |
 |---|---|---|
