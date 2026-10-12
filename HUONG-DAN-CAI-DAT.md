@@ -13,11 +13,11 @@
 | Tài khoản **Claude** trả phí (Pro, Max, Team hoặc Enterprise) | Đăng nhập Claude Code |  |
 | Tài khoản **GitHub** | Tải bộ skill | Repo riêng tư thì cần được mời vào repo trước |
 | Tài khoản **Confluence** công ty | Skill đọc tài liệu cũ trên Confluence | Đăng nhập được `https://confluence-sds.softdreams.vn:8090` |
-| **Figma Desktop** | Chỉ cần nếu bạn vẽ màn hình lên Figma (skill `easypos-design`) | Bản web của Figma **không dùng được** |ß
+| **Figma Desktop** | Chỉ cần nếu bạn vẽ màn hình lên Figma (skill `easypos-design`) | Bản web của Figma **không dùng được** |
 
 **Cách mở cửa sổ gõ lệnh** (cần ở nhiều bước bên dưới):
 - **macOS:** nhấn `Cmd + Space`, gõ `Terminal`, nhấn Enter.
-- **Windows:** nhấn phím `Windows`, gõ `PowerShell`, nhấn Enter.ß
+- **Windows:** nhấn phím `Windows`, gõ `PowerShell`, nhấn Enter.
 
 Mỗi lệnh trong hướng dẫn này: copy nguyên dòng, dán vào cửa sổ trên, nhấn Enter, đợi chạy xong rồi mới gõ lệnh tiếp theo.
 
@@ -198,6 +198,11 @@ Hiện ra đúng key là đã lưu được.
    ```
    Kết quả đúng: `confluence` hiện trạng thái đã kết nối (connected).
    `figma-ui` có thể báo chưa kết nối với Figma cho tới khi bạn làm Bước 8. Như vậy là bình thường.
+
+**`confluence` đứng mãi ở *Connecting…* hoặc báo lỗi `401`:** gần như luôn do máy chưa có token.
+1. Mở cửa sổ gõ lệnh, chạy lại lệnh kiểm tra ở Bước 6.2. Không hiện ra 4 ký tự nghĩa là token chưa được lưu: làm lại Bước 6.2.
+2. Hiện ra rồi mà vẫn lỗi: token có thể đã hết hạn hoặc bị copy thiếu. Tạo token mới (Bước 6.1) rồi lưu lại (Bước 6.2).
+3. Sau mỗi lần sửa, **thoát hẳn VS Code** rồi mở lại.
 
 > VS Code có thể hiện cảnh báo vàng trong `.mcp.json` dạng *Variable `CONFLUENCE_PAT` not found, did you mean `${lineNumber}`*. Đây chỉ là cảnh báo của trình soạn thảo, **bỏ qua được**, Claude Code vẫn đọc đúng token.
 
