@@ -155,7 +155,7 @@ Bộ skill đang để mặc định space **EP** (space của nhóm EasyPOS). N
 **Tìm key space của nhóm:** mở một trang bất kỳ trong space của nhóm trên Confluence và nhìn đường dẫn. Key là phần nằm ngay sau `/spaces/`:
 
 ```
-https://confluence-sds.softdreams.vn:8090/spaces/EP/pages/50697850/EasyPos
+https://....../spaces/EP/pages/..../EasyPos
                                                  ^^
                                                  key = EP
 ```
