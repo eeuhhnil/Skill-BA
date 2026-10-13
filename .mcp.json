@@ -1,9 +1,9 @@
 {
   "mcpServers": {
-    "figma-ui": {
+    "reqwise-figma": {
       "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "figma-ui-mcp"]
+      "command": "node",
+      "args": ["C:/Users/admin/Desktop/reqwise-figma-mcp/dist/server/index.js"]
     },
     "confluence": {
       "type": "stdio",

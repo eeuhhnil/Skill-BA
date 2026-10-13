@@ -13,7 +13,7 @@
 | Tài khoản **Claude** trả phí (Pro, Max, Team hoặc Enterprise) | Đăng nhập Claude Code |  |
 | Tài khoản **GitHub** | Tải bộ skill | Repo riêng tư thì cần được mời vào repo trước |
 | Tài khoản **Confluence** công ty | Skill đọc tài liệu cũ trên Confluence | Đăng nhập được `https://confluence-sds.softdreams.vn:8090` |
-| **Figma Desktop** | Chỉ cần nếu bạn vẽ màn hình lên Figma (skill `easypos-design`) | Bản web của Figma **không dùng được** |
+| **Figma Desktop** | Chỉ cần nếu bạn vẽ màn hình lên Figma (skill `easypos-figma`) | Bản web của Figma **không dùng được** |
 
 **Cách mở cửa sổ gõ lệnh** (cần ở nhiều bước bên dưới):
 - **macOS:** nhấn `Cmd + Space`, gõ `Terminal`, nhấn Enter.
@@ -101,7 +101,9 @@ Hiện ra dạng `uv 0.x.x` là được.
 
 ---
 
-## Bước 5. Cài Node.js (để kết nối Figma) - bước này có thể bỏ qua vì không cần dùng figma
+## Bước 5. Cài Node.js (để kết nối Figma)
+
+Bỏ qua bước này nếu bạn không vẽ lên Figma (không làm Bước 8).
 
 1. Tải bản **LTS** tại **https://nodejs.org** và cài, giữ nguyên mọi lựa chọn mặc định.
 2. Đóng cửa sổ gõ lệnh, mở lại, rồi kiểm tra:
@@ -191,13 +193,13 @@ Hiện ra đúng key là đã lưu được.
    Phải mở **đúng thư mục gốc**, tức thư mục chứa `README.md`, không mở thư mục con bên trong.
 3. Nếu VS Code hỏi **Do you trust the authors of the files in this folder?**, chọn **Yes, I trust the authors**.
 4. Mở Claude Code (biểu tượng ngôi sao cam).
-5. Nếu Claude Code hỏi có dùng các **MCP server** của project không (`confluence`, `figma-ui`), chọn **đồng ý**.
+5. Nếu Claude Code hỏi có dùng các **MCP server** của project không (`confluence`, `reqwise-figma`), chọn **đồng ý**.
 6. Gõ vào ô chat của Claude Code:
    ```
    /mcp
    ```
    Kết quả đúng: `confluence` hiện trạng thái đã kết nối (connected).
-   `figma-ui` có thể báo chưa kết nối với Figma cho tới khi bạn làm Bước 8. Như vậy là bình thường.
+   `reqwise-figma` có thể báo chưa kết nối với Figma cho tới khi bạn làm Bước 8. Như vậy là bình thường.
 
 **`confluence` đứng mãi ở *Connecting…* hoặc báo lỗi `401`:** gần như luôn do máy chưa có token.
 1. Mở cửa sổ gõ lệnh, chạy lại lệnh kiểm tra ở Bước 6.2. Không hiện ra 4 ký tự nghĩa là token chưa được lưu: làm lại Bước 6.2.
@@ -210,13 +212,27 @@ Hiện ra đúng key là đã lưu được.
 
 ## Bước 8. Kết nối Figma (chỉ khi cần vẽ màn hình lên Figma)
 
-Bỏ qua bước này nếu bạn không dùng skill `easypos-design`.
+Bỏ qua bước này nếu bạn không dùng skill `easypos-figma` hay các skill vẽ sơ đồ (`figma-userflow`, `figma-activity`, `figma-sequence`, `figma-state`, `figma-erd`, `figma-sitemap`).
+
+Cần có Git (Bước 1, Cách B) và Node.js (Bước 5).
 
 1. Cài **Figma Desktop** tại **https://www.figma.com/downloads** và đăng nhập.
-2. Tải plugin cầu nối: **[plugin.zip](https://github.com/TranHoaiHung/figma-ui-mcp/raw/main/plugin.zip)**, giải nén vào một chỗ cố định, ví dụ `Documents/figma-plugin`. Đừng xoá thư mục này sau khi cài.
-3. Trong Figma Desktop, mở file thiết kế → menu **Plugins → Development → Import plugin from manifest…** → chọn file `manifest.json` trong thư mục vừa giải nén.
-4. Mỗi lần muốn Claude vẽ lên Figma: mở file thiết kế, chạy **Plugins → Development → Figma UI MCP Bridge**. Cửa sổ plugin hiện **chấm xanh** là đã kết nối.
-5. Kiểm tra: gõ vào Claude Code `Kiểm tra kết nối figma-ui`. Claude sẽ trả về tên file Figma đang mở.
+2. Tải bộ kết nối Figma (MCP server và plugin): mở cửa sổ gõ lệnh **trong thư mục chứa `Skill-BA`** (ví dụ Desktop), chạy:
+   ```
+   git clone https://github.com/hoangpm96/reqwise-figma-mcp.git
+   cd reqwise-figma-mcp
+   npm install
+   ```
+   `npm install` tải thư viện và build server, mất vài phút. Xong thì thư mục `reqwise-figma-mcp` nằm cạnh `Skill-BA`. Đừng xoá hay đổi chỗ thư mục này sau khi cài.
+   Mở file `.mcp.json` trong `Skill-BA`, sửa đường dẫn trong mục `reqwise-figma` thành đường dẫn tới `reqwise-figma-mcp/dist/server/index.js` trên máy bạn, dùng dấu `/`. Ví dụ: `C:/Users/<tên máy>/Desktop/reqwise-figma-mcp/dist/server/index.js`. Sau đó thoát hẳn VS Code và mở lại.
+3. Trong Figma Desktop, mở file thiết kế → menu **Plugins → Development → Import plugin from manifest…** → chọn file `reqwise-figma-mcp\plugin\manifest.json`.
+4. Mỗi lần muốn Claude vẽ lên Figma: mở file thiết kế, chạy **Plugins → Development → Reqwise Figma MCP** và để cửa sổ plugin mở.
+   Cửa sổ plugin hiện **chấm xanh `Connected`** và tên file, page đang mở là đã kết nối:
+
+   <img src="images/reqwise-plugin.png" alt="Cửa sổ plugin Reqwise Figma MCP đã kết nối" width="320">
+
+   Chưa thấy `Connected` thì bấm **Reconnect**.
+5. Kiểm tra: gõ vào Claude Code `Kiểm tra kết nối reqwise-figma`. Claude sẽ trả về tên file Figma đang mở.
 
 ---
 
@@ -238,6 +254,13 @@ Claude giới thiệu các skill và gợi ý bước tiếp theo là bạn đã
   git pull
   ```
 - **Nếu tải ZIP (Cách A):** tải ZIP mới như Bước 1, rồi **chép thư mục `docs` từ bản cũ sang bản mới** trước khi xoá bản cũ. Thư mục `docs` chứa toàn bộ tài liệu bạn đã làm.
+
+- **Bộ kết nối Figma (nếu đã làm Bước 8):** mở cửa sổ gõ lệnh trong thư mục `reqwise-figma-mcp` và chạy
+  ```
+  git pull
+  npm install
+  ```
+  Sau đó trong Figma Desktop chạy lại plugin **Reqwise Figma MCP**.
 
 Sau khi cập nhật, thoát hẳn VS Code rồi mở lại.
 

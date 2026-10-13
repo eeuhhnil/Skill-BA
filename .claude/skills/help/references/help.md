@@ -54,7 +54,7 @@ Cross-skill routing exists only when the `help` hub skill is installed.
 The company's BA flow: kiểm tra tài liệu đã có → brainstorming → research →
 giải pháp sơ bộ (brief) → đánh giá ảnh hưởng (impact-analysis) → họp chốt →
 wireframe trắng đen → wireframe màu trên Figma (qua skill riêng của dự án nếu
-có cài, ví dụ `easypos-design`) → SRS → stories (tách story nằm ngoài phạm vi
+có cài, ví dụ `easypos-figma`) → SRS → stories (tách story nằm ngoài phạm vi
 bộ skill này — dùng công cụ quản lý ticket riêng của team).
 
 - Ý tưởng còn thô, chưa có hình hài → `brainstorming`.

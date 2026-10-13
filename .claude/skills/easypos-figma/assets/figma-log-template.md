@@ -1,10 +1,9 @@
 ---
 feature: {feature}
 wireframe: {đường dẫn file .excalidraw}
-figma_file: {link file Figma}
-figma_page: {link page}
-library: {link library hoặc "local"}
-mode: {Đi nhanh | Đi kỹ}
+figma_file: {tên file · link}
+figma_page: {tên page}
+design_kit: {tên kit trong design-kits/, vd pos}
 status: {draft | review | final}
 created: {DD/MM/YYYY}
 updated: {DD/MM/YYYY}
@@ -22,11 +21,11 @@ updated: {DD/MM/YYYY}
 
 | Màn | Phần tử wireframe | Component · variant | Ghi chú |
 |---|---|---|---|
-| ① | `+ Kiểm kê kho` (nền xám) | Button L Primary, icon Plus | |
+| ① | `+ Kiểm kê kho` (nền xám) | Button · Primary, icon `add` | |
 
-## 3. Chờ duyệt (bản nháp `_draft/*`)
+## 3. Thiếu trong design system
 
-| Component | Dùng ở | Vì sao chưa có trong library | Đề xuất |
+| Cần | Dùng ở | Đã xử lý thế nào (màn tham chiếu / phần tự ghép / bỏ qua) | Đề xuất cho DS |
 |---|---|---|---|
 
 ## 4. Suy luận `[ASSUMPTION]`

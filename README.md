@@ -29,7 +29,7 @@ Mỗi skill lấy **đầu ra của skill trước làm đầu vào**, nên ch�
 ```
  BƯỚC 1                                                            BƯỚC 3                         BƯỚC 5
  ──────────────────────────────────────────────────────────────    ────────────────────────────   ─────────
- brainstorming ─▶ deep-recon ─▶ product-brief ─▶ impact-analysis   ux ─▶ easypos-design           srs
+ brainstorming ─▶ deep-recon ─▶ product-brief ─▶ impact-analysis   ux ─▶ easypos-figma            srs
       │               │              │                 │              │             │              │
       ▼               ▼              ▼                 ▼              ▼             ▼              ▼
  brainstorm-     research.md     brief.md          impact.md     wireframe      màn Figma       srs.md
@@ -232,7 +232,7 @@ Có 2 cách, cả hai đều được:
                 │ Rồi
                 ▼
   ┌────────────────────────────┐
-  │ 3b. MÀN FIGMA CÓ MÀU       │   easypos-design
+  │ 3b. MÀN FIGMA CÓ MÀU       │   easypos-figma
   │     đúng design system     │   → frame trên Figma
   └─────────────┬──────────────┘
                 ▼
@@ -267,32 +267,33 @@ Có 2 cách, cả hai đều được:
 ```
 
 > 💡 Mở file `.excalidraw` bằng excalidraw.com hoặc extension Excalidraw trong VS Code để xem và chỉnh tay.
-> ⚠️ Ở bước này **chỉ lấy `EXPERIENCE.md` và wireframe**. Nếu skill đề nghị làm bảng màu, hướng thiết kế hay bản mock HTML thì **từ chối**, vì phần hình thức do `easypos-design` lo ở 3b.
+> ⚠️ Ở bước này **chỉ lấy `EXPERIENCE.md` và wireframe**. Nếu skill đề nghị làm bảng màu, hướng thiết kế hay bản mock HTML thì **từ chối**, vì phần hình thức do `easypos-figma` lo ở 3b.
 
-### 3b. Màn Figma có màu: `easypos-design`
+### 3b. Màn Figma có màu: `easypos-figma`
 
 | | |
 |---|---|
-| **Câu gọi mẫu** | `Chuyển wireframe docs/kiem-ke-kho/ux/wireframes/phieu-kiem-ke.excalidraw sang Figma: <link file Figma>` |
-| **Đầu vào** | File `.excalidraw` **đã chốt** + link Figma |
+| **Câu gọi mẫu** | `/easypos-figma` (để trống: skill tự tìm wireframe trong `docs/*/ux/`), hoặc `/easypos-figma Vẽ màn danh sách phiếu kiểm kê, web 1440` |
+| **Đầu vào** | File `.excalidraw` **đã chốt**, hoặc mô tả màn cần vẽ. Skill hỏi link file Figma đích, page và design system (kit trong `design-kits/`, mặc định `pos`) |
 | **Đầu ra** | Frame màu trên Figma + `docs/<nghiệp-vụ>/ux/figma/figma-log.md` |
+| **Cần có** | Figma Desktop đang mở file đích và chạy plugin **Reqwise Figma MCP** (xem Bước 8 trong `HUONG-DAN-CAI-DAT.md`) |
 
 **Skill sẽ làm gì:**
 - **Giữ đúng bố cục và nội dung của wireframe.** Skill không tự thêm hay bớt trường, nút hoặc bước.
-- **Chỉ dùng component và màu từ library EasyPOS**, không tự vẽ tay.
-- **Thành phần library chưa có** thì skill làm bản nháp, để ở page `Chờ duyệt` và báo lại cho designer.
-- **Ghi lại mọi thứ trong `figma-log.md`:** link từng màn, các giả định `[ASSUMPTION]`, câu hỏi mở.
+- **Chỉ dùng component và token trong design kit đã chọn**, ưu tiên clone màn tham chiếu cùng loại đã có trong file.
+- **Thành phần design system chưa có** thì skill liệt kê, ghi rõ phần nào phải tự ghép, và báo lại.
+- **Ghi lại mọi thứ trong `figma-log.md`:** file, page, kit đã chọn, node id từng màn, các giả định `[ASSUMPTION]`, câu hỏi mở.
 
-**Các chế độ khác của skill:**
-- `Kiểm tra màn Figma <link> theo design system`: chấm xem màn đã đúng chuẩn EasyPOS chưa.
-- `Cập nhật màn <tên> theo wireframe mới`: skill tạo phiên bản mới cạnh bản cũ, không sửa đè.
+**Việc khác skill làm được:**
+- Hỏi về design system: `design system có component X không`, `màn Y đang thế nào`.
+- Vẽ sơ đồ: chuyển sang các skill `/figma-userflow`, `/figma-state`… tương ứng.
 
 ### ✅ Checklist hoàn thành Bước 3
 
 - [ ] Luồng trong `EXPERIENCE.md` đã có đủ nhánh lỗi và trường hợp biên
 - [ ] Wireframe trắng đen đã được team đồng ý **trước khi** lên Figma
 - [ ] `figma-log.md` không còn `[ASSUMPTION]` hoặc câu hỏi mở chưa trả lời
-- [ ] Thành phần ở page `Chờ duyệt` đã báo cho designer
+- [ ] Các thành phần thiếu trong design system (mục 3 của `figma-log.md`) đã báo cho designer
 
 ---
 
